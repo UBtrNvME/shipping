@@ -26,18 +26,13 @@ class Waybill(models.Model):
     customer_id = fields.Many2one(comodel_name='res.partner',
                                   string='Customer',
                                   required=True)
-    service_ids = fields.Many2many(comodel_name='shipping.service',
-                                   string='Service',
-                                   relation='waybill_service_rel',
-                                   column1='waybill_id',
-                                   column2='service_id')
+    product_id = fields.Many2one(comodel_name='product.product',
+                                  string='Product',
+                                  required=True)
     vehicle_id = fields.Many2one(string='Vehicle', comodel_name='fleet.vehicle', required=True)
     driver_id = fields.Many2one(string='Driver', comodel_name='hr.employee', onchnage='_onchange_vehicle')
     route1_ids = fields.Many2many(comodel_name='shipping.route',
-                                  string='Route',
-                                  relation='route_waybill_rel',
-                                  column1='route_id',
-                                  column2='waybill_id')
+                                  string='Route')
 
     @api.onchange('vehicle_id')
     def _onchange_vehicle(self):

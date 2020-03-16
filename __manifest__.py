@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 {
-    'name': "waybill",
+    'name': "Shipping",
 
     'summary': """
         Model which introduces a new concept of the waybills to the fleet module""",
@@ -10,8 +10,8 @@
         Those things make it possible to manage movement of your fleet, and its optimization
     """,
 
-    'author': ["QZHub", "UBtrNvME"],
-    'website': "http://www.yourcompany.com",
+    'author': ['QZHub', 'UBtrNvME'],
+    'website': "http://www.qzhub.com",
 
     # Categories can be used to filter modules in modules listing
     # Check https://github.com/odoo/odoo/blob/12.0/odoo/addons/base/data/ir_module_category_data.xml
@@ -20,12 +20,11 @@
     'version': '0.1',
 
     # any module necessary for this one to work correctly
-    'depends': ['fleet', 'hr'],
+    'depends': ['fleet', 'hr', 'sale'],
 
     # always loaded
     'data': [
-        'security/ir.model.access.csv',
-        'views/views.xml',
+        'views/waybill_view.xml',
         'views/templates.xml',
     ],
     # only loaded in demonstration mode

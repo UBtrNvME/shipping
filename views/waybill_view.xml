@@ -1,5 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+
 <odoo>
+    <template id="assets_backend" name="project_qzhub" inherit_id="web.assets_backend">
+        <xpath expr="." position="inside">
+            <link rel="stylesheet" href="/shipping/static/src/css/Kanban-style.css"/>
+        </xpath>
+    </template>
     <data>
 
         <record id="waybill_form_view" model="ir.ui.view">
@@ -52,61 +59,201 @@
             </field>
         </record>-->
 
-<!--        <record id="waybill_graph_view" model="ir.ui.view">
-            <field name="name">shipping.waybill.graph</field>
-            <field name="model">shipping.waybill</field>
-            <field name="arch" type="xml">
-                <graph string="Waybill">
-                    <field name="example_field"/>
-                    <field name="example_field" type="measure"/>
-                </graph>
-            </field>
-        </record>-->
+        <!--        <record id="waybill_graph_view" model="ir.ui.view">
+                    <field name="name">shipping.waybill.graph</field>
+                    <field name="model">shipping.waybill</field>
+                    <field name="arch" type="xml">
+                        <graph string="Waybill">
+                            <field name="example_field"/>
+                            <field name="example_field" type="measure"/>
+                        </graph>
+                    </field>
+                </record>-->
 
-<!--        <record id="waybill_pivot_view" model="ir.ui.view">
-            <field name="name">shipping.waybill.pivot</field>
-            <field name="model">shipping.waybill</field>
-            <field name="arch" type="xml">
-                <pivot string="Waybill">
-                    <field name="example_field" type="row"/>
-                    <field name="example_field" type="measure"/>
-                </pivot>
-            </field>
-        </record>-->
+        <!--        <record id="waybill_pivot_view" model="ir.ui.view">
+                    <field name="name">shipping.waybill.pivot</field>
+                    <field name="model">shipping.waybill</field>
+                    <field name="arch" type="xml">
+                        <pivot string="Waybill">
+                            <field name="example_field" type="row"/>
+                            <field name="example_field" type="measure"/>
+                        </pivot>
+                    </field>
+                </record>-->
 
-<!--        <record id="waybill_search_view" model="ir.ui.view">
-            <field name="name">shipping.waybill.search</field>
-            <field name="model">shipping.waybill</field>
-            <field name="arch" type="xml">
-                <search string="Waybill">
-                    <group expand="1" string="Group By">
-                        <filter string="Example Field" name="example_field" domain="[]"
-                                context="{'group_by':'example_field'}"/>
-                    </group>
-                </search>
-            </field>
-        </record>-->
+        <!--        <record id="waybill_search_view" model="ir.ui.view">
+                    <field name="name">shipping.waybill.search</field>
+                    <field name="model">shipping.waybill</field>
+                    <field name="arch" type="xml">
+                        <search string="Waybill">
+                            <group expand="1" string="Group By">
+                                <filter string="Example Field" name="example_field" domain="[]"
+                                        context="{'group_by':'example_field'}"/>
+                            </group>
+                        </search>
+                    </field>
+                </record>-->
 
+        <!-- Kanban card -->
         <record id="waybill_kanban_view" model="ir.ui.view">
             <field name="name">shipping.waybill.kanban</field>
             <field name="model">shipping.waybill</field>
+            <field name="type">kanban</field>
             <field name="arch" type="xml">
-                <kanban>
-                    <field name="id"/>
-                    <field name="example_field"/>
+                <kanban class="o_kanban_mobile">
+                    <field name="number"/>
+                    <field name="create_date"/>
+                    <field name="service_ids"/>
+                    <field name="vehicle_id"/>
+                    <field name="driver_id"/>
+                    <field name="route_ids"/>
+                    <field name="serial"/>
                     <templates>
-                        <t t-name="kanban-box">
-                            <div class="oe_kanban_global_click o_res_partner_kanban">
-                                <div class="oe_kanban_details">
-                                    <strong class="o_kanban_record_title oe_partner_heading">
-                                        <field name="name"/>
-                                    </strong>
+                        <div t-name="kanban-box"
+                             class="oe_kanban_card oe_kanban_global_click mx-0 mb-3 p-0 border-0 bg-none mt-1">
+                            <div t-attf-class="card text-#{record.tcolor.raw_value} bg-#{record.color.raw_value} w-100">
+                                <!--Kanban's header -->
+                                <div class="project__header-kanban">
+
+                                    <!--Project key-->
+                                    <div class="padding-name kanban__sprint-header">
+
+                                        <div class="kanban__sprint-key">
+                                            <small>
+                                                <field name="create_date"/>
+                                            </small>
+                                        </div>
+
+                                        <div class="kanban__sprint-name">
+                                            <small>
+                                                <field name="name" class="ml-1"/>
+                                            </small>
+                                        </div>
+
+                                    </div>
+
+                                    <!--Kanban's dropdown menu-->
+                                    <div class="o_dropdown_kanban dropdown">
+                                        <a role="button" class="dropdown-toggle o-no-caret btn" data-toggle="dropdown"
+                                           href="#" aria-label="Dropdown menu" title="Dropdown menu">
+                                            <span class="fa fa-ellipsis-v"/>
+                                        </a>
+                                        <div class="dropdown-menu" role="menu">
+                                            <!--                                            <a name="%(portal.portal_share_action)d" role="menuitem" type="action"-->
+                                            <!--                                               class="dropdown-item fa fa-share ">-->
+                                            <!--                                                <span class="ml-3">Share</span>-->
+                                            <!--                                            </a>-->
+                                            <a t-if="widget.editable" role="menuitem" type="edit"
+                                               class="dropdown-item fa fa-pencil-square-o">
+                                                <span class="ml-3">Edit</span>
+                                            </a>
+                                            <a t-if="widget.editable" role="menuitem" type="delete"
+                                               class="dropdown-item fa fa-times">
+                                                <span class="ml-3">Delete</span>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <!-- End header -->
                                 </div>
-                                <div class="oe_kanban_details">
+
+                                <!-- Kanban's sprint goal-->
+
+                                <!--                                <div class="project__name-kanban padding-name pr-1">-->
+                                <!--                                    <t t-esc="record.sprint_goal.value"/>-->
+                                <!--                                </div>-->
+
+
+                                <!--Body kanban -->
+
+
+                                <div class="button-section ">
+                                    <!--Button -->
+
+                                    <!--                                    <button class="  btn btn-transparent us-btn p-0 pb-2"-->
+                                    <!--                                            name="%(action_ps_us_current_sprint)d"-->
+                                    <!--                                            type="action"-->
+                                    <!--                                            title="User Stories">-->
+
+                                    <!--                                        <span class="o_label p-0 float-left">-->
+                                    <!--                                            <img src="project_scrum/static/src/Icons/user_story_sprint.png"-->
+                                    <!--                                                 width="20" heith="20"/>:-->
+                                    <!--                                        </span>-->
+
+                                    <!--                                        <span class="o_value pb-1 float-left">-->
+                                    <!--                                            <field name="us_progress"/>-->
+                                    <!--                                        </span>-->
+                                    <!--                                    </button>-->
+                                    <!--                                    <button class="btn btn-transparent p-0 pb-2 btn-sprint"-->
+                                    <!--                                            name="%(action_ps_sprint_backlog)d"-->
+                                    <!--                                            type="action"-->
+                                    <!--                                            title="Sprint Backlog Tasks">-->
+                                    <!--                                        <span class="o_label p-0 float-left">-->
+                                    <!--                                            <img src="project_scrum/static/src/Icons/sprint_backlog.png" width="20"-->
+                                    <!--                                                 heith="20"/>:-->
+                                    <!--                                        </span>-->
+
+                                    <!--                                        <span class="o_value p-0 float-left">-->
+                                    <!--                                            <t t-esc="record.done_task_count.raw_value"/>-->
+                                    <!--                                            /-->
+                                    <!--                                            <t t-esc="record.task_count.raw_value"/>-->
+                                    <!--                                        </span>-->
+
+                                    <!--                                    </button>-->
+
+                                    <!--                                    <button class="btn btn-transparent float-right p-0 pb-2"-->
+                                    <!--                                            title="Days Left">-->
+
+                                    <!--                                        <span class="o_label p-0 float-left">-->
+                                    <!--                                            <img src="project_scrum/static/src/Icons/calendar_time.jpg"-->
+                                    <!--                                                 width="20"-->
+                                    <!--                                                 heith="20"-->
+                                    <!--                                                 class="p-0"/>:-->
+                                    <!--                                        </span>-->
+
+                                    <!--                                        <span class=" float-left">-->
+                                    <!--                                            <t t-esc="record.days_left.value " widget="time_delta_days"/>-->
+                                    <!--                                        </span>-->
+
+                                    <!--                                    </button>-->
+                                    <t t-esc="record.driver_id.value"/>
+                                    <t t-esc="record.vehicle_id.value"/>
+                                    <t t-esc="record.service_ids.value"/>
+                                    <t t-esc="record.route_ids.value"/>
 
                                 </div>
+
+
+                                <div class="sprint__footer-kanban padding-name">
+
+                                    <!--                                    <div class="favorite">-->
+                                    <!--                                        <field name="is_favorite" widget="boolean_favorite" nolabel="1"-->
+                                    <!--                                               force_save="1"-->
+                                    <!--                                        />-->
+                                    <!--                                    </div>-->
+
+                                    <!--                                    <div class="ml-3">-->
+                                    <!--                                        <img src="project_scrum/static/src/Icons/deadline_1.png"-->
+                                    <!--                                             width="20" heith="22"/>-->
+
+                                    <!--                                    </div>-->
+
+                                    <!--                                    <div class="ml-3">-->
+                                    <!--                                        <img src="project_scrum/static/src/Icons/blocked_task_1.png"-->
+                                    <!--                                             width="20" heith="22"/>-->
+                                    <!--                                    </div>-->
+
+                                    <!--                                    <div class="members">-->
+                                    <!--                                        <field name="sprint_members" domain="[('project_ids','=',project_id)]"-->
+                                    <!--                                               widget="avatar_image_m"/>-->
+                                    <!--                                    </div>-->
+                                    <div class="oe_right">
+                                        <t t-esc="record.serial.value"/>
+                                    </div>
+                                </div>
+
+
                             </div>
-                        </t>
+                        </div>
                     </templates>
                 </kanban>
             </field>
@@ -118,7 +265,7 @@
             <field name="res_model">shipping.waybill</field>
             <field name="view_type">form</field>
             <field name="view_mode">kanban,tree,form</field>
-<!--            <field name="context">{"search_default_example_field":1}</field>-->
+            <!--            <field name="context">{"search_default_example_field":1}</field>-->
             <field name="help" type="html">
                 <p class="oe_view_nocontent_create">
                     There is no examples click here to add new Waybill.

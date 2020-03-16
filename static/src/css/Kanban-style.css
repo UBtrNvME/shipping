@@ -1,0 +1,233 @@
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+
+/*Kanban's project style*/
+
+
+/*Kanban's width*/
+.o_kanban_view .o_kanban_group:not(.o_column_folded){
+width:345px;
+}
+
+
+
+
+/*Kanban's project Title name */
+
+.project__name-kanban{
+font-weight: bold;
+ /* Запрещаем перенос строк */
+overflow: hidden; /* Обрезаем все, что не помещается в область */
+padding: 2px; /* Поля вокруг текста */
+text-overflow: ellipsis; /* Добавляем многоточие */
+height:41px;
+float: left;
+padding: 0px;
+margin-top:-3px;
+
+}
+
+/* Project members style*/
+.members{
+    padding:3px;
+    margin-left:auto;
+    padding-top: 3px;
+    font-weight: bold;
+    /* Запрещаем перенос строк */
+   overflow: hidden; /* Обрезаем все, что не помещается в область */
+   text-overflow: ellipsis; /* Добавляем многоточие */
+   width:auto;
+   height: 42px;
+  
+    
+
+}
+.members-us{
+padding:3px;
+    margin-left:-60px;
+    padding-top: 8px;
+    font-weight: bold;
+    /* Запрещаем перенос строк */
+   overflow: hidden; /* Обрезаем все, что не помещается в область */
+   text-overflow: ellipsis; /* Добавляем многоточие */
+   width:160px;
+   height: 42px;
+}
+
+/* Section button*/
+.button-section{
+    justify-content: space-between;
+    display: flex;
+    padding:1px;
+    padding-top: 3px;
+    padding-left: 12px;
+    padding-right: 12px;
+
+}
+
+/*Sprint button style see this in boostrap in view!!!*/ 
+.sprint-btn {
+    
+}
+
+/* User story button style see this in boostrap in view!!*/
+.us-btn {
+
+}
+
+/* Kanban's favorite style */
+.o_field_widget, .o_field_widget input.o_input{
+
+}
+
+/* Favoritse style*/
+.favorite{
+    
+    float:left;
+    align-items: center;
+
+}
+
+/*Project kanban;s  */
+.project__footer-kanban{
+    padding-left: 5px;
+    padding-right: 5px;
+    padding-bottom: 5px;
+    align-items: center;
+    display: flex;
+    padding-top:0px;
+}
+
+
+.body-kanban-card{
+
+}
+
+
+
+
+/*Kanban's project card height*/
+.card{
+    height: 140px;
+    
+}
+
+
+/*Sprint's kanban header */
+
+.kanban__sprint-header{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    float: left;
+    
+}
+
+.kanban__sprint-name{
+
+   margin-left: 15px;
+
+}
+
+.kanban__sprint-key{
+    
+}
+
+.sprint__footer-kanban{
+    padding-left: 5px;
+    padding-right: 5px;
+    padding-bottom: 5px;
+    align-items: center;
+    display: flex;
+    padding-top:0px;
+}
+
+.btn-sprint{
+    padding-bottom: 20px;
+}
+
+/* User story Kanabn*/
+
+.userStory__header-kanban{
+    display: flex;
+    align-items: center;
+    float: left;
+}
+
+.kanban__us-header{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    float: left;
+}
+
+
+.us__footer-kanban{
+    padding-left: 5px;
+    padding-right: 5px;
+    padding-bottom: 5px;
+    align-items: center;
+    display: flex;
+    padding-top:0px;
+    justify-content: space-between;
+}
+
+.button-section-us{
+    justify-content: space-between;
+    display: flex;
+    padding:0px;
+    padding-top: 2px;
+}
+
+.btn-us{
+    padding-bottom: 10px;
+}
+
+/* Task kanban */
+.task__name-kanban{
+    font-weight: bold;
+ /* Запрещаем перенос строк */
+overflow: hidden; /* Обрезаем все, что не помещается в область */
+text-overflow: ellipsis; /* Добавляем многоточие */
+height:42px;
+float: left;
+}
+
+
+
+.task__footer-kanban{
+    padding-left: 12px;
+    padding-right: 5px;
+    padding-bottom: 0px;
+    align-items: center;
+    display: flex;
+    padding-top:10px;
+    justify-content: space-between;
+}
+
+.priority-us{
+    margin-right: auto;
+    float: left;
+}
+
+/* Main */
+
+.padding-name{
+    padding-left: 12px;
+    
+  
+}
+.priority{
+    margin-right: 102px;
+    float: left;
+}
+
+.o_kanban_view .oe_kanban_card .o_field_many2manytags, .o_kanban_view .oe_kanban_card .o_kanban_tags, .o_kanban_view .o_kanban_record .o_field_many2manytags, .o_kanban_view .o_kanban_record .o_kanban_tags{
+    line-height: 2.2;
+}
+
+
+
+.project__height { height:41px; }
+	
+}
+
