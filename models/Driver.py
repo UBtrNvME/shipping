@@ -1,11 +1,10 @@
 from odoo import fields, models, api
 
 
-class $ModelName$ (models.Model):
-    _name = '$ProjectName$.$TableName$'
-    _description = '$Description$'
+class Driver (models.Model):
+    _inherit = 'hr.employee'
 
-    name = fields.Char()
-    $END$
-
-
+    waybill_ids = fields.One2many(comodel_name='shipping.waybill',
+                                      inverse_name='driver_id',
+                                      string='Waybill',
+                                      required=False)

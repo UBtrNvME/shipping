@@ -2,4 +2,8 @@
 
 from . import (Waybill,
                Product,
-               Route)
+               Route,
+               Driver,
+               Partner,
+               Vehicle,
+               )

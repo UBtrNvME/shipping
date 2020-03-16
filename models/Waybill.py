@@ -31,7 +31,7 @@ class Waybill(models.Model):
                                   required=True)
     vehicle_id = fields.Many2one(string='Vehicle', comodel_name='fleet.vehicle', required=True)
     driver_id = fields.Many2one(string='Driver', comodel_name='hr.employee', onchnage='_onchange_vehicle')
-    route1_ids = fields.Many2many(comodel_name='shipping.route',
+    route_ids = fields.Many2many(comodel_name='shipping.route',
                                   string='Route')
 
     @api.onchange('vehicle_id')
