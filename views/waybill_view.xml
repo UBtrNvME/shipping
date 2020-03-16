@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="waybill_form_view" model="ir.ui.view">
+            <field name="name">shipping.waybill.form</field>
+            <field name="model">shipping.waybill</field>
+            <field name="arch" type="xml">
+                <form string="Waybill">
+                    <sheet>
+                        <div class="oe_title">
+                            <label for="serial"/>
+                            <h1>
+                                <field name="name"/>
+                            </h1>
+                            <field name="serial"/>
+                        </div>
+                        <group>
+                            <field name="driver_id"/>
+                            <field name="vehicle_id"/>
+                            <field name="service_ids"/>
+                            <field name="route_ids"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="waybill_tree_view" model="ir.ui.view">
+            <field name="name">shipping.waybill.tree</field>
+            <field name="model">shipping.waybill</field>
+            <field name="arch" type="xml">
+                <tree string="Waybill">
+                    <field name="number"/>
+                    <field name="create_date"/>
+                    <field name="service_ids"/>
+                    <field name="vehicle_id"/>
+                    <field name="driver_id"/>
+                    <field name="route_ids"/>
+                </tree>
+            </field>
+        </record>
+
+        <!--<record id="waybill_calendar_view" model="ir.ui.view">
+            <field name="name">shipping.waybill.calendar</field>
+            <field name="model">shipping.waybill</field>
+            <field name="arch" type="xml">
+                <calendar string="Waybill" date_start="example_date_field" color="example_boolean_field">
+                    <field name="example_field"/>
+                    <field name="example_field" widget="monetary"/>
+                </calendar>
+            </field>
+        </record>-->
+
+<!--        <record id="waybill_graph_view" model="ir.ui.view">
+            <field name="name">shipping.waybill.graph</field>
+            <field name="model">shipping.waybill</field>
+            <field name="arch" type="xml">
+                <graph string="Waybill">
+                    <field name="example_field"/>
+                    <field name="example_field" type="measure"/>
+                </graph>
+            </field>
+        </record>-->
+
+<!--        <record id="waybill_pivot_view" model="ir.ui.view">
+            <field name="name">shipping.waybill.pivot</field>
+            <field name="model">shipping.waybill</field>
+            <field name="arch" type="xml">
+                <pivot string="Waybill">
+                    <field name="example_field" type="row"/>
+                    <field name="example_field" type="measure"/>
+                </pivot>
+            </field>
+        </record>-->
+
+<!--        <record id="waybill_search_view" model="ir.ui.view">
+            <field name="name">shipping.waybill.search</field>
+            <field name="model">shipping.waybill</field>
+            <field name="arch" type="xml">
+                <search string="Waybill">
+                    <group expand="1" string="Group By">
+                        <filter string="Example Field" name="example_field" domain="[]"
+                                context="{'group_by':'example_field'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>-->
+
+        <record id="waybill_kanban_view" model="ir.ui.view">
+            <field name="name">shipping.waybill.kanban</field>
+            <field name="model">shipping.waybill</field>
+            <field name="arch" type="xml">
+                <kanban>
+                    <field name="id"/>
+                    <field name="example_field"/>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div class="oe_kanban_global_click o_res_partner_kanban">
+                                <div class="oe_kanban_details">
+                                    <strong class="o_kanban_record_title oe_partner_heading">
+                                        <field name="name"/>
+                                    </strong>
+                                </div>
+                                <div class="oe_kanban_details">
+
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
+        <record id="waybill_act_window" model="ir.actions.act_window">
+            <field name="name">Waybill</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">shipping.waybill</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">kanban,tree,form</field>
+<!--            <field name="context">{"search_default_example_field":1}</field>-->
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    There is no examples click here to add new Waybill.
+                </p>
+            </field>
+        </record>
+
+        <menuitem name="Waybill" id="shipping_waybill" parent="shipping_root" action="waybill_act_window"/>
+
+    </data>
+</odoo>
