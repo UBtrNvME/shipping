@@ -16,7 +16,7 @@
                 <form string="Waybill">
                     <sheet>
                         <div class="oe_title">
-                            <label for="serial"/>
+                            <label for="name"/>
                             <h1>
                                 <field name="name"/>
                             </h1>
@@ -25,8 +25,12 @@
                         <group>
                             <field name="driver_id"/>
                             <field name="vehicle_id"/>
-                            <field name="service_ids"/>
-                            <field name="route_ids"/>
+                            <field name="customer_id"/>
+                            <label for="odometer_before"/>
+                            <div class="o_row">
+                                <field name="odometer_before"/>
+                                <field name="odometer_unit" class="oe_right"/>
+                            </div>
                         </group>
                     </sheet>
                 </form>
@@ -40,10 +44,8 @@
                 <tree string="Waybill">
                     <field name="number"/>
                     <field name="create_date"/>
-                    <field name="service_ids"/>
                     <field name="vehicle_id"/>
                     <field name="driver_id"/>
-                    <field name="route_ids"/>
                 </tree>
             </field>
         </record>
@@ -103,15 +105,13 @@
                 <kanban class="o_kanban_mobile">
                     <field name="number"/>
                     <field name="create_date"/>
-                    <field name="service_ids"/>
                     <field name="vehicle_id"/>
                     <field name="driver_id"/>
-                    <field name="route_ids"/>
                     <field name="serial"/>
                     <templates>
                         <div t-name="kanban-box"
                              class="oe_kanban_card oe_kanban_global_click mx-0 mb-3 p-0 border-0 bg-none mt-1">
-                            <div t-attf-class="card text-#{record.tcolor.raw_value} bg-#{record.color.raw_value} w-100">
+                            <div class="card bg-success w-100">
                                 <!--Kanban's header -->
                                 <div class="project__header-kanban">
 
@@ -139,10 +139,6 @@
                                             <span class="fa fa-ellipsis-v"/>
                                         </a>
                                         <div class="dropdown-menu" role="menu">
-                                            <!--                                            <a name="%(portal.portal_share_action)d" role="menuitem" type="action"-->
-                                            <!--                                               class="dropdown-item fa fa-share ">-->
-                                            <!--                                                <span class="ml-3">Share</span>-->
-                                            <!--                                            </a>-->
                                             <a t-if="widget.editable" role="menuitem" type="edit"
                                                class="dropdown-item fa fa-pencil-square-o">
                                                 <span class="ml-3">Edit</span>
@@ -158,100 +154,22 @@
 
                                 <!-- Kanban's sprint goal-->
 
-                                <!--                                <div class="project__name-kanban padding-name pr-1">-->
-                                <!--                                    <t t-esc="record.sprint_goal.value"/>-->
-                                <!--                                </div>-->
-
-
                                 <!--Body kanban -->
 
 
                                 <div class="button-section ">
                                     <!--Button -->
-
-                                    <!--                                    <button class="  btn btn-transparent us-btn p-0 pb-2"-->
-                                    <!--                                            name="%(action_ps_us_current_sprint)d"-->
-                                    <!--                                            type="action"-->
-                                    <!--                                            title="User Stories">-->
-
-                                    <!--                                        <span class="o_label p-0 float-left">-->
-                                    <!--                                            <img src="project_scrum/static/src/Icons/user_story_sprint.png"-->
-                                    <!--                                                 width="20" heith="20"/>:-->
-                                    <!--                                        </span>-->
-
-                                    <!--                                        <span class="o_value pb-1 float-left">-->
-                                    <!--                                            <field name="us_progress"/>-->
-                                    <!--                                        </span>-->
-                                    <!--                                    </button>-->
-                                    <!--                                    <button class="btn btn-transparent p-0 pb-2 btn-sprint"-->
-                                    <!--                                            name="%(action_ps_sprint_backlog)d"-->
-                                    <!--                                            type="action"-->
-                                    <!--                                            title="Sprint Backlog Tasks">-->
-                                    <!--                                        <span class="o_label p-0 float-left">-->
-                                    <!--                                            <img src="project_scrum/static/src/Icons/sprint_backlog.png" width="20"-->
-                                    <!--                                                 heith="20"/>:-->
-                                    <!--                                        </span>-->
-
-                                    <!--                                        <span class="o_value p-0 float-left">-->
-                                    <!--                                            <t t-esc="record.done_task_count.raw_value"/>-->
-                                    <!--                                            /-->
-                                    <!--                                            <t t-esc="record.task_count.raw_value"/>-->
-                                    <!--                                        </span>-->
-
-                                    <!--                                    </button>-->
-
-                                    <!--                                    <button class="btn btn-transparent float-right p-0 pb-2"-->
-                                    <!--                                            title="Days Left">-->
-
-                                    <!--                                        <span class="o_label p-0 float-left">-->
-                                    <!--                                            <img src="project_scrum/static/src/Icons/calendar_time.jpg"-->
-                                    <!--                                                 width="20"-->
-                                    <!--                                                 heith="20"-->
-                                    <!--                                                 class="p-0"/>:-->
-                                    <!--                                        </span>-->
-
-                                    <!--                                        <span class=" float-left">-->
-                                    <!--                                            <t t-esc="record.days_left.value " widget="time_delta_days"/>-->
-                                    <!--                                        </span>-->
-
-                                    <!--                                    </button>-->
                                     <t t-esc="record.driver_id.value"/>
                                     <t t-esc="record.vehicle_id.value"/>
-                                    <t t-esc="record.service_ids.value"/>
-                                    <t t-esc="record.route_ids.value"/>
 
                                 </div>
 
 
                                 <div class="sprint__footer-kanban padding-name">
-
-                                    <!--                                    <div class="favorite">-->
-                                    <!--                                        <field name="is_favorite" widget="boolean_favorite" nolabel="1"-->
-                                    <!--                                               force_save="1"-->
-                                    <!--                                        />-->
-                                    <!--                                    </div>-->
-
-                                    <!--                                    <div class="ml-3">-->
-                                    <!--                                        <img src="project_scrum/static/src/Icons/deadline_1.png"-->
-                                    <!--                                             width="20" heith="22"/>-->
-
-                                    <!--                                    </div>-->
-
-                                    <!--                                    <div class="ml-3">-->
-                                    <!--                                        <img src="project_scrum/static/src/Icons/blocked_task_1.png"-->
-                                    <!--                                             width="20" heith="22"/>-->
-                                    <!--                                    </div>-->
-
-                                    <!--                                    <div class="members">-->
-                                    <!--                                        <field name="sprint_members" domain="[('project_ids','=',project_id)]"-->
-                                    <!--                                               widget="avatar_image_m"/>-->
-                                    <!--                                    </div>-->
                                     <div class="oe_right">
                                         <t t-esc="record.serial.value"/>
                                     </div>
                                 </div>
-
-
                             </div>
                         </div>
                     </templates>
@@ -272,8 +190,8 @@
                 </p>
             </field>
         </record>
-
+        <!-- This Menu Item will appear in the Upper bar, That's why It needs NO parent or action -->
+        <menuitem id="shipping_root" name="Shipping" sequence="0"/>
         <menuitem name="Waybill" id="shipping_waybill" parent="shipping_root" action="waybill_act_window"/>
-
     </data>
 </odoo>
