@@ -8,6 +8,7 @@ class Vehicle (models.Model):
                                       inverse_name='vehicle_id',
                                       string='Waybill',
                                       required=False)
-    
-
-
+    driver_ids = fields.One2many(comodel_name='hr.employee',
+                                      inverse_name='vehicle_id',
+                                      string='Driver',
+                                      required=False)
