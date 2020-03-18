@@ -7,7 +7,7 @@ class Waybill(models.Model):
     _name = 'shipping.waybill'
     _rec_name = 'serial'
 
-    serial_format = 5
+    serial_format = 4
 
     def _generate_serial(self, id):
         return str(id).rjust(self.serial_format, '0')
@@ -16,7 +16,7 @@ class Waybill(models.Model):
         return str(id)
 
     def _generate_name(self, number):
-        return "Waybill #" + str(number)
+        return "WAYBILL OF THE CAR #" + str(number)
 
     name = fields.Char(string='Name', readonly=True)
     serial = fields.Char(string='Serial number', readonly=True)
@@ -41,8 +41,12 @@ class Waybill(models.Model):
     vehicle_id = fields.Many2one(string='Vehicle', comodel_name='fleet.vehicle', required=True)
     driver_id = fields.Many2one(string='Driver', comodel_name='hr.employee')
     # Attributes=   :type= Related params
-    odometer_before = fields.Float(string='Odometer before',related='vehicle_id.odometer' ,readonly=True)
-    odometer_unit = fields.Selection(string='Odometer unit',related='vehicle_id.odometer_unit', readonly=True)
+    odometer_before = fields.Float(string='Odometer before', related='vehicle_id.odometer', readonly=True)
+    odometer_after = fields.Float(string='Odometer after', related='vehicle_id.odometer', readonly=True)
+    odometer_unit = fields.Selection(string='Odometer unit', related='vehicle_id.odometer_unit', readonly=True)
+    license_plate = fields.Char(string='License plate', related='vehicle_id.license_plate', readonly=True)
+    driver_identification = fields.Char(string='Driver\'s ID', related='driver_id.identification_id', readonly=True)
+
     @api.model
     def create(self, vals):
         wb = super(Waybill, self).create(vals_list=vals)
