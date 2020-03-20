@@ -31,14 +31,22 @@
                                 <group name="vehicle" string="Vehicle info">
                                     <field name="vehicle_id"/>
                                     <field name="license_plate"/>
+                                    <span>OTHER VEHICLE INFORMATION</span>
                                 </group>
                                 <group name="driver" string="Driver info">
                                     <field name="driver_id"/>
                                     <field name="driver_identification"/>
+                                    <span>OTHER DRIVER INFORMATION</span>
                                 </group>
                                 <group name="customer" string="Customer info">
                                     <field name="customer_id"/>
+                                    <span>OTHER CUSTOMER INFORMATION</span>
 
+                                </group>
+                                <group name="route" string="Route info">
+                                    <field name="route_id"/>
+                                    <field name="garage_id"/>
+                                    <span>OTHER ROUTE INFORMATION</span>
                                 </group>
                             </group>
                     </sheet>

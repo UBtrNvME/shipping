@@ -38,14 +38,31 @@ class Waybill(models.Model):
     customer_id = fields.Many2one(comodel_name='res.partner',
                                   string='Customer',
                                   required=True)
-    vehicle_id = fields.Many2one(string='Vehicle', comodel_name='fleet.vehicle', required=True)
-    driver_id = fields.Many2one(string='Driver', comodel_name='hr.employee')
+    vehicle_id = fields.Many2one(string='Vehicle',
+                                 comodel_name='fleet.vehicle',
+                                 required=True)
+    driver_id = fields.Many2one(string='Driver',
+                                comodel_name='hr.employee')
+    route_id = fields.Many2one(comodel_name='shipping.route',
+                               string='Route',
+                               required=False)
     # Attributes=   :type= Related params
     odometer_before = fields.Float(string='Odometer before', related='vehicle_id.odometer', readonly=True)
     odometer_after = fields.Float(string='Odometer after', related='vehicle_id.odometer', readonly=True)
     odometer_unit = fields.Selection(string='Odometer unit', related='vehicle_id.odometer_unit', readonly=True)
     license_plate = fields.Char(string='License plate', related='vehicle_id.license_plate', readonly=True)
     driver_identification = fields.Char(string='Driver\'s ID', related='driver_id.identification_id', readonly=True)
+    fuel_start = fields.Float(string='Fuel mission start')
+    fuel_end = fields.Float(string='Fuel mission end')
+    garage_id = fields.Char(string='Garage id')
+    # @api.depends('vehicle_id.log_fuel')
+    # @api.one
+    # def _compute_fuel_start(self):
+    #     fuel_end_buf = self.env['shipping.waybill'].search([('vehicle_id', '=', self.vehicle_id.id)], order='id desc',
+    #                                                        limit='1').fuel_end
+    #     fuel_refill = self.env['fleet.vehicle.log.fuel'].search([('vehicle_id', '=', self.vehicle_id.id)&('create_date', '<')],
+    #                                                             order='id desc', limit='1').liter
+    #     self.fuel_start = fuel_end_buf + fuel_refill
 
     @api.model
     def create(self, vals):
