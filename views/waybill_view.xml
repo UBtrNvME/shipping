@@ -15,40 +15,51 @@
             <field name="arch" type="xml">
                 <form string="Waybill">
                     <sheet>
-                            <group name="left" col="1">
-                                <div>
-                                    <label for="name" class="oe_edit_only"/>
-                                    <h1 class="oe_title">
-                                        <!--<field name="serial"
-                                               class="oe_inline"/>-->
-                                        <field name="name"/>
-                                    </h1>
-                                    <label for="create_date" class="oe_edit_only"/>
-                                    <h2>
-                                        <field name="create_date"/>
-                                    </h2>
-                                </div>
-                                <group name="vehicle" string="Vehicle info">
-                                    <field name="vehicle_id"/>
-                                    <field name="license_plate"/>
-                                    <span>OTHER VEHICLE INFORMATION</span>
-                                </group>
-                                <group name="driver" string="Driver info">
-                                    <field name="driver_id"/>
-                                    <field name="driver_identification"/>
-                                    <span>OTHER DRIVER INFORMATION</span>
-                                </group>
-                                <group name="customer" string="Customer info">
-                                    <field name="customer_id"/>
-                                    <span>OTHER CUSTOMER INFORMATION</span>
+                        <div>
+                            <label for="name" class="oe_edit_only"/>
+                            <h1 class="oe_title">
+                                <!--<field name="serial"
+                                       class="oe_inline"/>-->
+                                <field name="name"/>
+                            </h1>
+                            <label for="create_date" class="oe_edit_only"/>
+                            <h2>
+                                <field name="create_date"/>
+                            </h2>
+                        </div>
+                        <group name="left" col="2">
 
-                                </group>
-                                <group name="route" string="Route info">
-                                    <field name="route_id"/>
-                                    <field name="garage_id"/>
-                                    <span>OTHER ROUTE INFORMATION</span>
-                                </group>
+                            <group name="vehicle" string="Vehicle info">
+                                <field name="vehicle_id"/>
+                                <field name="license_plate"/>
                             </group>
+
+                            <group name="driver" string="Driver info">
+                                <field name="driver_id"/>
+                                <field name="driver_identification"/>
+                            </group>
+
+                            <group name="customer" string="Customer info">
+                                <field name="customer_id"/>
+                            </group>
+
+                            <!--<group name="route" string="Route info">
+                                <field name="route_id"/>
+                                <field name="garage_id"/>
+
+                            </group>-->
+
+                            <group name="odometer" string="Odometer info">
+                                <field name="odometer_before"/>
+                                <field name="odometer_after"/>
+                                <field name="odometer_unit"/>
+                            </group>
+                            <group name="fuel" string="Fuel info">
+                                <field name="fuel_start"/>
+                                <field name="fuel_end"/>
+                                <field name="fuel_type"/>
+                            </group>
+                        </group>
                     </sheet>
                 </form>
             </field>

@@ -15,3 +15,7 @@ class Route(models.Model):
     location_ids = fields.Many2many(comodel_name='asset.asset',
                                     string='Location',
                                     )
+    operation_ids = fields.One2many(comodel_name='shipping.schedule.operation',
+                                    inverse_name='route_id',
+                                    string='Operation',
+                                    required=False)

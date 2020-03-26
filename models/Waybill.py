@@ -46,15 +46,22 @@ class Waybill(models.Model):
     route_id = fields.Many2one(comodel_name='shipping.route',
                                string='Route',
                                required=False)
+    operation_id = fields.Many2one(comodel_name='shipping.schedule.operation',
+                                   string='Operation')
+    schedule_id = fields.Many2one(comodel_name='shipping.schedule',
+                                  string='Schedule')
+    # log_fuel = fields.Many2one(comodel_name='vehicle_id.log.fuel')
     # Attributes=   :type= Related params
     odometer_before = fields.Float(string='Odometer before', related='vehicle_id.odometer', readonly=True)
-    odometer_after = fields.Float(string='Odometer after', related='vehicle_id.odometer', readonly=True)
+    odometer_after = fields.Float(string='Odometer after')
     odometer_unit = fields.Selection(string='Odometer unit', related='vehicle_id.odometer_unit', readonly=True)
     license_plate = fields.Char(string='License plate', related='vehicle_id.license_plate', readonly=True)
     driver_identification = fields.Char(string='Driver\'s ID', related='driver_id.identification_id', readonly=True)
     fuel_start = fields.Float(string='Fuel mission start')
     fuel_end = fields.Float(string='Fuel mission end')
+    fuel_type = fields.Selection(string='Fuel type', related='vehicle_id.log_fuel.cost_type')
     garage_id = fields.Char(string='Garage id')
+
     # @api.depends('vehicle_id.log_fuel')
     # @api.one
     # def _compute_fuel_start(self):

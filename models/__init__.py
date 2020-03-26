@@ -4,4 +4,6 @@ from . import (Waybill,
                Driver,
                Partner,
                Vehicle,
+               Schedule,
+
                )
