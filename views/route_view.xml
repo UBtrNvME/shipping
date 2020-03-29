@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+            <!--form view of the route model-->
+            <record id="route_form" model="ir.ui.view">
+                  <field name="name">shipping.route.form</field>
+                  <field name="model">shipping.route</field>
+                  <field name="arch" type="xml">
+                         <form string="Route">
+                             <group>
+                                 <field name="route_name"/>
+                                 <field name="route"/>
+                             </group>
+                         </form>
+                  </field>
+            </record>
+
+
+        <!--tree view of the route model-->
+            <record id="route_tree" model="ir.ui.view">
+                  <field name="name">shipping.route.tree</field>
+                  <field name="model">shipping.route</field>
+                  <field name="arch" type="xml">
+                         <tree string="Route">
+                             <field name="route_name"/>
+                             <!--<field name="location_ids"/>
+                             <field name="operation_ids"/>
+                             <field name="customer_id"/>-->
+                         </tree>
+                  </field>
+            </record>
+
+
+          <record id="action_route" model="ir.actions.act_window">
+                 <field name="name">Route</field>
+                 <field name="type">ir.actions.act_window</field>
+                 <field name="res_model">shipping.route</field>
+                 <field name="view_type">form</field>
+                 <field name="view_mode">tree,form</field>
+                 <!--            <field name="context">{"search_default_example_field":1}</field>-->
+                 <field name="help" type="html">
+                     <p class="oe_view_nocontent_create">
+                         There is no examples click here to add new Route.
+                     </p>
+                 </field>
+        </record>
+         <!--This Menu Item will appear in the Upper bar, That's why It needs NO parent or action -->
+     <menuitem id="shipping_root" name="Shipping"/>
+     <menuitem name="Route" id="shipping_route" parent="shipping.shipping_root" action="action_route"/>
+</odoo>

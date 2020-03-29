@@ -19,6 +19,10 @@
                                 <field name="number"/>
                                 <field name="schedule_id"/>
                                 <field name="customer_id"/>
+                                       <!--domain="[('start.name', '=','parent.route.route_source_name')]"/>-->
+                                <field name="route_id"/>
+                                <!--todo
+                                <field name="route_id" domain="[('route_source_name', '=', operation_source_name)]"/>-->
                             </group>
                             <group>
                                 <tree>
@@ -41,7 +45,6 @@
                     <field name="number"/>
                     <field name="schedule_id"/>
                     <field name="customer_id"/>
-                    <field name="route_id"/>
                 </tree>
             </field>
         </record>

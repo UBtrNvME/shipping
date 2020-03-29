@@ -1,6 +1,5 @@
 from odoo import fields, models, api
 
-
 class Schedule(models.Model):
     _name = 'shipping.schedule'
     _description = 'A part of the shipping module, which will be controlling generation of the waybills'
@@ -30,4 +29,14 @@ class Operation(models.Model):
     waybill_ids = fields.One2many(string='Waybills', comodel_name='shipping.waybill', inverse_name='operation_id')
     customer_id = fields.Many2one(comodel_name='res.partner', string='Customer')
     route_id = fields.Many2one(comodel_name='shipping.route', string='Route')
+    """todo 
+    operation_source = fields.Many2one(comodel_name='asset.asset', string='Operation Source Location', required=True)
+    operation_destination = fields.Many2one(comodel_name='asset.asset', string='Operation Destination Location', required=True)
+    operation_source_name = fields.Char(string="Route Source Name", compute='get_operation_name')
 
+    @api.one
+    @api.depends('operation_source')
+    def get_operation_name(self):
+        if self.operation_source:
+            self.operation_source_name = self.operation_source.name
+    """

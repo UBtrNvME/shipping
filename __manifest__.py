@@ -20,13 +20,16 @@
     'version'    : '0.1',
 
     # any module necessary for this one to work correctly
-    'depends'    : ['fleet', 'hr', 'sale'],
+    'depends'    : ['fleet', 'hr', 'sale', 'asset',],
 
     # always loaded
     'data'       : ['views/waybill_view.xml',
                     'views/schedule_view.xml',
                     'views/operation_view.xml',
-                    'views/templates.xml', ],
+                    'views/templates.xml',
+                    'views/route_view.xml',
+                    'views/line_view.xml',
+                    ],
     # only loaded in demonstration mode
     'demo'       : [
         'demo/demo.xml',

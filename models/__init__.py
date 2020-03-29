@@ -5,5 +5,6 @@ from . import (Waybill,
                Partner,
                Vehicle,
                Schedule,
-
+                Location,
+                Route,
                )
