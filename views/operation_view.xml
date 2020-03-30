@@ -14,13 +14,20 @@
                                 <field name="name" placeholder="Title"/>
                             </h1>
                         </div>
+                        <div class="oe_button_box" name="button_box">
+                            <button name="action_open_waybill" type="object" string="Open new waybill"
+                                    icon="fa-archive" attrs="{'invisible' : [('active_waybill', '!=', False)]}"/>
+                            <button name="action_close_waybill" type="object" string="Finish waybill"
+                                    icon="fa-archive" attrs="{'invisible' : [('active_waybill', '=', False)]}"/>
+                        </div>
                         <group col="1">
                             <group>
                                 <field name="number"/>
                                 <field name="schedule_id"/>
                                 <field name="customer_id"/>
-                                       <!--domain="[('start.name', '=','parent.route.route_source_name')]"/>-->
+                                <!--domain="[('start.name', '=','parent.route.route_source_name')]"/>-->
                                 <field name="route_id"/>
+                                <field name="active_waybill"/>
                                 <!--todo
                                 <field name="route_id" domain="[('route_source_name', '=', operation_source_name)]"/>-->
                             </group>
@@ -75,7 +82,8 @@
             </field>
         </record>
 
-        <menuitem name="Operations" id="shipping_schedule_operation" parent="shipping.shipping_root" action="operation_act_window"/>
+        <menuitem name="Operations" id="shipping_schedule_operation" parent="shipping.shipping_root"
+                  action="operation_act_window"/>
 
     </data>
 </odoo>

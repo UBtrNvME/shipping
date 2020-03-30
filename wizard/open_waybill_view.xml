@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!--
+        Wizard form for the Change Parent Wizard class
+        -->
+        <record id="open_waybill_form" model="ir.ui.view">
+            <field name="name">shipping.open_waybill.form</field>
+            <field name="model">shipping.open_waybill</field>
+            <field name="arch" type="xml">
+                <form string="open_waybill">
+                    <sheet>
+                        <group>
+                            <field name="operation_id" invisible="0"/>
+                            <field name="vehicle_id"/>
+                            <field name="driver_id"/>
+                            <field name="fuel_start"/>
+                        </group>
+                    </sheet>
+                    <footer>
+                        <button name="create_waybill" string="Create" class="btn-primary" type="object"/>
+                        <button string="Cancel" class="btn-default" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+    </data>
+</odoo>

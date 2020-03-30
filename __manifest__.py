@@ -29,7 +29,8 @@
                     'views/templates.xml',
                     'views/route_view.xml',
                     'views/line_view.xml',
-                    ],
+                    'wizard/open_waybill_view.xml',
+                    'wizard/close_waybill_view.xml'],
     # only loaded in demonstration mode
     'demo'       : [
         'demo/demo.xml',
