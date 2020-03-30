@@ -14,22 +14,29 @@
                                 <field name="name" placeholder="Title"/>
                             </h1>
                         </div>
-                        <div class="oe_button_box" name="button_box">
-                            <button name="action_open_waybill" type="object" string="Open new waybill"
-                                    icon="fa-archive" attrs="{'invisible' : [('active_waybill', '!=', False)]}"/>
-                            <button name="action_close_waybill" type="object" string="Finish waybill"
-                                    icon="fa-archive" attrs="{'invisible' : [('active_waybill', '=', False)]}"/>
-                        </div>
+
                         <group col="1">
-                            <group>
-                                <field name="number"/>
-                                <field name="schedule_id"/>
-                                <field name="customer_id"/>
-                                <!--domain="[('start.name', '=','parent.route.route_source_name')]"/>-->
-                                <field name="route_id"/>
-                                <field name="active_waybill"/>
-                                <!--todo
-                                <field name="route_id" domain="[('route_source_name', '=', operation_source_name)]"/>-->
+                            <group col="2">
+                                <group>
+                                    <field name="number"/>
+                                    <field name="schedule_id"/>
+                                    <field name="customer_id"/>
+                                    <!--domain="[('start.name', '=','parent.route.route_source_name')]"/>-->
+                                    <field name="route_id"/>
+                                    <field name="active_waybill"/>
+                                    <!--todo
+                                    <field name="route_id" domain="[('route_source_name', '=', operation_source_name)]"/>-->
+                                </group>
+                                <group>
+                                    <div class="oe_button_box" name="button_box">
+                                        <button name="action_open_waybill" type="object" string="Open new waybill"
+                                                icon="fa-archive"
+                                                attrs="{'invisible' : [('active_waybill', '!=', False)]}"/>
+                                        <button name="action_close_waybill" type="object" string="Finish waybill"
+                                                icon="fa-archive"
+                                                attrs="{'invisible' : [('active_waybill', '=', False)]}"/>
+                                    </div>
+                                </group>
                             </group>
                             <group>
                                 <tree>
@@ -49,9 +56,11 @@
             <field name="model">shipping.schedule.operation</field>
             <field name="arch" type="xml">
                 <tree string="Operation">
-                    <field name="number"/>
+                    <field name="number" style="width: 10px"/>
                     <field name="schedule_id"/>
                     <field name="customer_id"/>
+                    <field name="route_id"/>
+                    <field name="active_waybill"/>
                 </tree>
             </field>
         </record>

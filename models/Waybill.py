@@ -122,3 +122,4 @@ class Waybill(models.Model):
                 'date'      : waybill.create_date
                 }
             fuel_log.create(data)
+    
