@@ -10,6 +10,10 @@ class OpenWaybill(models.TransientModel):
     driver_id = fields.Many2one(comodel_name='hr.employee')
     fuel_start = fields.Float()
 
+    @api.onchange('vehicle_id')
+    def _onchange_fuel_start(self):
+        self.fuel_start = self.vehicle_id.fuel_in_the_tank
+
     def create_waybill(self):
         op = self.operation_id
         driver = self.driver_id
@@ -39,8 +43,9 @@ class CloseWaybill(models.TransientModel):
         waybill = self.env['shipping.waybill'].search([('id', '=', self.waybill_id.id)], limit=1)
         data = {
             'fuel_end'      : self.fuel_end,
-            'odometer_after': self.odometer_after
+            'odometer_after': float(self.odometer_after)
             }
+        print(data)
         waybill.write(data)
         self.env['shipping.schedule.operation'].search([('active_waybill', '=', waybill.id)]).write(
             {'active_waybill': False})

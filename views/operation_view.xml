@@ -56,7 +56,7 @@
             <field name="model">shipping.schedule.operation</field>
             <field name="arch" type="xml">
                 <tree string="Operation">
-                    <field name="number" style="width: 10px"/>
+                    <field name="number"/> <!-- style="width: 10px"-->
                     <field name="schedule_id"/>
                     <field name="customer_id"/>
                     <field name="route_id"/>

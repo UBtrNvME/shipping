@@ -12,3 +12,4 @@ class Partner(models.Model):
                                   inverse_name='customer_id',
                                   string='Waybill',
                                   required=False)
+    #TODO need to prepare product model, as well as its views

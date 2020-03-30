@@ -11,3 +11,4 @@ class Driver(models.Model):
     vehicle_id = fields.Many2one(comodel_name='fleet.vehicle',
                                  string='Vehicle',
                                  required=False)
+    #TODO connect driver class with vehicle class, in the way that we have constant driver team

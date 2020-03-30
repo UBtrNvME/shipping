@@ -13,8 +13,8 @@
                         <group>
                             <field name="operation_id" invisible="0"/>
                             <field name="vehicle_id"/>
-                            <field name="driver_id"/>
-                            <field name="fuel_start"/>
+                            <field name="driver_id" attrs="{'invisible' : [('vehicle_id', '=', False)]}"/>
+                            <field name="fuel_start" attrs="{'invisible' : [('vehicle_id', '=', False)]}"/>
                         </group>
                     </sheet>
                     <footer>

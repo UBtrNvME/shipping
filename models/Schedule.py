@@ -47,7 +47,7 @@ class Operation(models.Model):
     def action_open_waybill(self):
         # created context for the form view with a default preset values
         context = {
-            'default_operation_id': self.id,
+            'default_operation_id': self.id
             }
         # returning a form view with set parameters
         return {

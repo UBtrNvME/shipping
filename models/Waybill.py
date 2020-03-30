@@ -102,15 +102,19 @@ class Waybill(models.Model):
             in_tank = self.vehicle_id.fuel_in_the_tank
             at_start = vals['fuel_start']
             refilled = at_start - in_tank
+            print(f'refilled = at_start({at_start}) - in_tank({in_tank}) = {refilled}')
             if refilled:
                 self._create_fuel_log(refilled)
                 self.vehicle_id.fuel_in_the_tank = at_start
+            #FIXME find a way to make this constraints work
             else:
                 raise ValueError('Your value is lower than in the tank value!')
         else:
             vals['fuel_start'] = self.vehicle_id.fuel_in_the_tank
         if vals.get('fuel_end'):
             self.vehicle_id.fuel_in_the_tank = vals['fuel_end']
+        if vals.get('odometer_after'):
+            self._create_odometer_log(vals['odometer_after'])
         return super(Waybill, self).write(vals=vals)
 
     def _create_fuel_log(self, refilled):
@@ -122,4 +126,13 @@ class Waybill(models.Model):
                 'date'      : waybill.create_date
                 }
             fuel_log.create(data)
-    
+
+    def _create_odometer_log(self, odometer):
+        data = {
+            'date'      : fields.Date.today(),
+            'vehicle_id': self.vehicle_id.id,
+            'driver_id' : self.driver_id.id,
+            'value'     : odometer,
+            'unit'      : self.vehicle_id.odometer_unit
+            }
+        self.env['fleet.vehicle.odometer'].create(data)
