@@ -61,22 +61,64 @@ class Waybill(models.Model):
     fuel_end = fields.Float(string='Fuel mission end')
     fuel_type = fields.Selection(string='Fuel type', related='vehicle_id.log_fuel.cost_type')
     garage_id = fields.Char(string='Garage id')
+    active_operation = fields.Many2one(comodel_name='shipping.schedule.operation')
 
-    # @api.depends('vehicle_id.log_fuel')
+    # @api.depends('vehicle_id')
     # @api.one
     # def _compute_fuel_start(self):
-    #     fuel_end_buf = self.env['shipping.waybill'].search([('vehicle_id', '=', self.vehicle_id.id)], order='id desc',
-    #                                                        limit='1').fuel_end
-    #     fuel_refill = self.env['fleet.vehicle.log.fuel'].search([('vehicle_id', '=', self.vehicle_id.id)&('create_date', '<')],
-    #                                                             order='id desc', limit='1').liter
-    #     self.fuel_start = fuel_end_buf + fuel_refill
+    #     self.fuel_start = self.vehicle_id.fuel_in_the_tank
+    #
+    # def _inverse_fuel_start(self):
+    #     in_the_tank = self.vehicle_id.fuel_in_the_tank
+    #     start = self.fuel_start
+    #     if in_the_tank is not start:
+    #         refilled = start - in_the_tank
+    #         if refilled > 0:
+    #             data = {
+    #                 'vehicle_id': self.vehicle_id,
+    #                 'liter'     : refilled,
+    #                 'date'      : self.create_date
+    #                 }
+    #             self.env['fleet.vehicle.log.fuel'].sudo().write(data)
+    #         else:
+    #             raise ArithmeticError
 
     @api.model
     def create(self, vals):
         wb = super(Waybill, self).create(vals_list=vals)
         number = self._generate_number(wb.id)
-        values = {'serial': self._generate_serial(wb.id),
-                  'number': number,
-                  'name'  : self._generate_name(number)}
+        values = {
+            'serial': self._generate_serial(wb.id),
+            'number': number,
+            'name'  : self._generate_name(number),
+            }
+        print(values)
         wb.update(values=values)
         return wb
+
+    @api.multi
+    def write(self, vals):
+        if 'fuel_start' in vals and vals['fuel_start'] > 0:
+            in_tank = self.vehicle_id.fuel_in_the_tank
+            at_start = vals['fuel_start']
+            refilled = at_start - in_tank
+            if refilled:
+                self._create_fuel_log(refilled)
+                self.vehicle_id.fuel_in_the_tank = at_start
+            else:
+                raise ValueError('Your value is lower than in the tank value!')
+        else:
+            vals['fuel_start'] = self.vehicle_id.fuel_in_the_tank
+        if vals.get('fuel_end'):
+            self.vehicle_id.fuel_in_the_tank = vals['fuel_end']
+        return super(Waybill, self).write(vals=vals)
+
+    def _create_fuel_log(self, refilled):
+        fuel_log = self.env['fleet.vehicle.log.fuel']
+        for waybill in self:
+            data = {
+                'vehicle_id': waybill.vehicle_id.id,
+                'liter'     : refilled,
+                'date'      : waybill.create_date
+                }
+            fuel_log.create(data)
