@@ -92,7 +92,6 @@ class Waybill(models.Model):
             'number': number,
             'name'  : self._generate_name(number),
             }
-        print(values)
         wb.update(values=values)
         return wb
 
@@ -102,7 +101,6 @@ class Waybill(models.Model):
             in_tank = self.vehicle_id.fuel_in_the_tank
             at_start = vals['fuel_start']
             refilled = at_start - in_tank
-            print(f'refilled = at_start({at_start}) - in_tank({in_tank}) = {refilled}')
             if refilled:
                 self._create_fuel_log(refilled)
                 self.vehicle_id.fuel_in_the_tank = at_start
