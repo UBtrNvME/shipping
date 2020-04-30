@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <data>
-        <!--
-        Wizard form for the Change Parent Wizard class
-        -->
+
         <record id="open_waybill_form" model="ir.ui.view">
             <field name="name">shipping.open_waybill.form</field>
             <field name="model">shipping.open_waybill</field>
@@ -24,6 +22,5 @@
                 </form>
             </field>
         </record>
-
     </data>
 </odoo>

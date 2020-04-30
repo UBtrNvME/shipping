@@ -141,7 +141,7 @@
                     <templates>
                         <div t-name="kanban-box"
                              class="oe_kanban_card oe_kanban_global_click mx-0 mb-3 p-0 border-0 bg-none mt-1">
-                            <div class="card bg-success w-100">
+                            <div class="card bg-light w-100">
                                 <!--Kanban's header -->
                                 <div class="project__header-kanban">
 

@@ -43,7 +43,7 @@ class Operation(models.Model):
             self.operation_source_name = self.operation_source.name
     """
 
-    # Function that creates a pop up form view for the wizard class (Change Parent Wizard)
+    # Function that creates a pop up form view for the wizard class (Open Waybill)
     def action_open_waybill(self):
         # created context for the form view with a default preset values
         context = {

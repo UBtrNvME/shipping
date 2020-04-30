@@ -1,2 +1,3 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_waybill_waybill,access.waybill.waybill,model_waybill_waybill,,1,1,1,1
+access_waybill_waybill,access.waybill.waybill,model_waybill_waybill,base.user_root,1,1,1,1
+access_asset_asset,access.asset.asset,model_asset_asset,base.user_root,1,1,1,1

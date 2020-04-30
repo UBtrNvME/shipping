@@ -28,6 +28,8 @@
                                     <field name="route_id" domain="[('route_source_name', '=', operation_source_name)]"/>-->
                                 </group>
                                 <group>
+
+
                                     <div class="oe_button_box" name="button_box">
                                         <button name="action_open_waybill" type="object" string="Open new waybill"
                                                 icon="fa-archive"
@@ -36,6 +38,8 @@
                                                 icon="fa-archive"
                                                 attrs="{'invisible' : [('active_waybill', '=', False)]}"/>
                                     </div>
+
+
                                 </group>
                             </group>
                             <group>
