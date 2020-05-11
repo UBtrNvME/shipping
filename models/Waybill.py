@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-
+import requests, time
 from odoo import models, fields, api
 
 
@@ -62,26 +62,12 @@ class Waybill(models.Model):
     fuel_type = fields.Selection(string='Fuel type', related='vehicle_id.log_fuel.cost_type')
     garage_id = fields.Char(string='Garage id')
     active_operation = fields.Many2one(comodel_name='shipping.schedule.operation')
-
-    # @api.depends('vehicle_id')
-    # @api.one
-    # def _compute_fuel_start(self):
-    #     self.fuel_start = self.vehicle_id.fuel_in_the_tank
-    #
-    # def _inverse_fuel_start(self):
-    #     in_the_tank = self.vehicle_id.fuel_in_the_tank
-    #     start = self.fuel_start
-    #     if in_the_tank is not start:
-    #         refilled = start - in_the_tank
-    #         if refilled > 0:
-    #             data = {
-    #                 'vehicle_id': self.vehicle_id,
-    #                 'liter'     : refilled,
-    #                 'date'      : self.create_date
-    #                 }
-    #             self.env['fleet.vehicle.log.fuel'].sudo().write(data)
-    #         else:
-    #             raise ArithmeticError
+    # Atrributes=   :type= GPS params
+    # gps_login = 'toottk'
+    # gps_password = 'DGvvAZ5zL'
+    # gps_url = 'https://online.omnicomm.ru'
+    # gps_jwt = ''
+    # gps_refresh_key = ''
 
     @api.model
     def create(self, vals):
@@ -104,7 +90,7 @@ class Waybill(models.Model):
             if refilled:
                 self._create_fuel_log(refilled)
                 self.vehicle_id.fuel_in_the_tank = at_start
-            #FIXME find a way to make this constraints work
+            # FIXME find a way to make this constraints work
             else:
                 raise ValueError('Your value is lower than in the tank value!')
         else:
