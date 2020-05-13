@@ -23,23 +23,23 @@ headers = {
 
 def RequestWithRetry(req):
     if not values['gps_jwt']:
-        print('Im in no gps_JWT')
+        print('Login')
         status = 0
         while status != 200:
             response = login_gps_system()
             status = response.status_code
             if status != 200:
                 time.sleep(values['sleep_time'])
-        values['last_refresh_time'] = time.localtime()
-    elif values['gps_refresh_key'] or (time.localtime() - values['last_refresh_time']) < values['session_time']:
-        print('Im in with GPS_refresh_key')
+        # values['last_refresh_time'] = time.localtime()
+    elif values['gps_refresh_key'] and values['exp'] <= datetime.datetime.now().timestamp():
+        print('Refresh')
         status = 0
         while status != 200:
             response = refresh_gps_system()
             status = response.status_code
             if status != 200:
                 time.sleep(values['sleep_time'])
-        values['last_refresh_time'] = time.localtime()
+        # values['last_refresh_time'] = time.localtime()
     return req()
 
 
@@ -49,16 +49,18 @@ def login_gps_system():
                                  values['gps_login'], values['gps_password']))
     values['gps_jwt'] = response.json()['jwt']
     values['gps_refresh_key'] = response.json()['refresh']
+    values['exp'] = get_jwt_exp()
     return response
 
 
 def refresh_gps_system():
     h = headers.copy()
+    h.pop('Content-Type')
     h['Authorization'] = values['gps_refresh_key']
-    response = requests.post(url=f"{values['gps_url']}/auth/login?jwt=1", headers=h)
-    print(response.json())
+    response = requests.post(url=f"{values['gps_url']}/auth/refresh", headers=h)
     values['gps_jwt'] = response.json()['jwt']
     values['gps_refresh_key'] = response.json()['refresh']
+    values['exp'] = get_jwt_exp()
     return response
 
 
@@ -80,7 +82,7 @@ def get_vehicle_state(vehicle):
     h = headers.copy()
     h['Authorization'] = "JWT " + values['gps_jwt']
     h.pop('Content-Type')
-    response = requests.get(url="%s/ls/api/v1/vehicles/%d/state" % (values['gps_url'], vehicle), headers=h)
+    response = requests.get(url="%s/ls/api/v1/vehicles/%s/state" % (values['gps_url'], vehicle), headers=h)
     return response
 
 
@@ -113,7 +115,16 @@ def add_new_vehicle(dictionary):
     return response
 
 
+def get_list_of_vehicles(group_id=None):
+    h = headers.copy()
+    h.pop('Content-Type')
+    h['Authorization'] = "JWT " + values['gps_jwt']
+    gid = "" if group_id is None else "/" + str(group_id)
+    response = requests.get(url=f"{values['gps_url']}/ls/api/v2/tree/vehicle{gid}", headers=h)
+    return response
+
+
 def get_jwt_exp():
     encoded = values['gps_jwt']
-    decoded = jwt.decode(encoded, 'secret', algorithms='HS256')
-    return decoded
+    decoded = jwt.decode(encoded, verify=False)
+    return decoded['exp']

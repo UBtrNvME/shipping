@@ -63,6 +63,7 @@ class Waybill(models.Model):
     garage_id = fields.Char(string='Garage id')
     active_operation = fields.Many2one(comodel_name='shipping.schedule.operation')
     # Atrributes=   :type= GPS params
+    map_image = fields.Binary()
     # gps_login = 'toottk'
     # gps_password = 'DGvvAZ5zL'
     # gps_url = 'https://online.omnicomm.ru'

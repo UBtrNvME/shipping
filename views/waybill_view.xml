@@ -28,7 +28,6 @@
                             </h2>
                         </div>
                         <group name="left" col="2">
-
                             <group name="vehicle" string="Vehicle info">
                                 <field name="vehicle_id"/>
                                 <field name="license_plate"/>
@@ -59,6 +58,9 @@
                                 <field name="fuel_type"/>
                             </group>
                         </group>
+                        <div>
+
+                        </div>
                     </sheet>
                 </form>
             </field>

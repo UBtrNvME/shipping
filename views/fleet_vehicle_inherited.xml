@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="fleet_vehicle_log_fuel_view_tree_inherit" model="ir.ui.view">
+            <field name="name">fleet.vehicle.log.fuel.tree</field>
+            <field name="model">fleet.vehicle.log.fuel</field>
+            <field name="inherit_id" ref="fleet.fleet_vehicle_log_fuel_view_tree"/>
+            <field name="priority" eval="8"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='liter']" position="attributes">
+                    <attribute name="sum">Total Fuel Used</attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <!-- Inherit Form View of The Fleet Vehicle -->
+        <record id="fleet_vehicle_view_form_inherit" model="ir.ui.view">
+            <field name="name">fleet.vehicle.form</field>
+            <field name="model">fleet.vehicle</field>
+            <field name="inherit_id" ref="fleet.fleet_vehicle_view_form"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//field[@name='tag_ids']" position="after">
+                    <!-- Add your fields or attributes here -->
+                    <label for="digital_id" class="oe_edit_only"/>
+                    <h2>
+                        <field name="digital_id" class="oe_inline" placeholder="e.g. 32313564"/>
+                    </h2>
+                </xpath>
+
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="fleet_vehicle_import_from_gps_action">
+            <field name="name">Import Vehicles from GPS Server</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">shipping.import_from_gps</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="import_from_gps_form"/>
+            <field name="target">new</field>
+        </record>
+
+        <menuitem action="fleet_vehicle_import_from_gps_action" parent="fleet.fleet_configuration"
+                  id="fleet_vehicle_import_from_gps_menu" sequence="15"/>
+    </data>
+</odoo>
