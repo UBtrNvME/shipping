@@ -1,36 +1,69 @@
-# -*- coding: utf-8 -*-
-from odoo import models, fields, api
+from odoo import fields, models, api
+from odoo.exceptions import ValidationError
+
+"""
+class RLC(models.Model):
+    _name = 'shipping.route.rlc'
+    route_id = fields.Many2one(comodel_name='shipping.route',
+                               string='Route')
+    location_id = fields.Many2one(comodel_name='asset.asset',
+                               string='Location')
+    index = fields.Integer(string='Index')
+"""
 
 
 class Route(models.Model):
     _name = 'shipping.route'
+    _rec_name = 'route_name'
 
-    name = fields.Char(string='Route name', readonly=True)
-    locations = fields.Many2many(string='Locations', required=True, )
-    customer = fields.Many2one(strign='Customer', required=True, comodel_name='res.partner')
-    distance = fields.Integer(string='Distance', readonly=True, compute='_compute_distance')
-    gps_dist_to_real = 1
+    operation_ids = fields.Many2many(comodel_name='shipping.schedule.operation',
+                                    #inverse_name='route_id',
+                                    string='Operation',
+                                    required=False)
+    customer_id = fields.Many2one(comodel_name='res.partner', string='Customer')
+    """todo
+    route_source_name = fields.Char(string="Route Source Name", compute='get_route_name')
+    route_destination_name = fields.Char(string="Route Destination Name", compute='get_route_name')
+    """
+    route = fields.One2many(comodel_name="shipping.route.line", string="Line", inverse_name='route_ids')
+    route_name = fields.Char(string="Route Name", compute='get_route_name')
 
-    def _geospatial_dif(self, points_left):
-        x = int(self.locations[points_left - 1].longitude) - int(self.locations[points_left - 2].longitude)
-        y = int(self.locations[points_left - 1].latitude) - int(self.locations[points_left - 2].latitude)
-        dist = (x * x + y * y) ** 0.5
-        if points_left > 2:
-            return dist + self._geospatial_dif(points_left - 1)
-        else:
-            return dist
-
-    @api.depends('locations')
     @api.one
-    def _compute_distance(self):
+    @api.depends('route')
+    def get_route_name(self):
+        name = ""
+        if self.route:
+            for point in self.route:
+                name += point.source_location.name + " - "
+            name += point.destination_location.name
+            self.route_name = name
 
-        points_left = len(self.locations)
-        geospatial_distance = self._geospatial_dif(points_left=points_left)
-        self.distance = geospatial_distance * self.gps_dist_to_real
 
-    @api.model
-    def create(self, values):
-        name = values['name'] = self.locations[0].name + ' - ' + self.locations[len(self.locations) - 1]
-        if self.env["waybill.route"].search([('name', '=', name)]) is True:
-            values['name'] = name + f" ({self.client.name})"
-        return super(Route, self).create(values)
+    @api.one
+    @api.constrains('route')
+    def check_route(self):
+        for i in range(len(self.route)-1):
+            if self.route[i].destination_location != self.route[i+1].source_location:
+                raise ValidationError('Added Route is invalid')
+
+
+class Line(models.Model):
+    _name = 'shipping.route.line'
+    route_ids = fields.Many2one(comodel_name='shipping.route',
+                                    string='Route',
+                                    required=False)
+    source_location = fields.Many2one(comodel_name='asset.asset', string='Source Location', required=True)
+    destination_location = fields.Many2one(comodel_name='asset.asset', string='Destination Location', required=True)
+
+    """line_name = fields.Char(string="Route Name", compute='get_line_name')
+
+
+    @api.one
+    @api.depends('source_location', 'destination_location')
+    def get_route_name(self):
+        if self.source_location and self.destination_location:
+            self.line_name = self.source_location.name + " -> " \
+                                   + self.destination_location.name"""
+
+
+

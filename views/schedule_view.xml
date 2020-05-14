@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="schedule_form_view" model="ir.ui.view">
+            <field name="name">shipping.schedule.form</field>
+            <field name="model">shipping.schedule</field>
+            <field name="arch" type="xml">
+                <form string="Schedule">
+                    <sheet>
+                        <div class="oe_title">
+                            <label for="name"/>
+                            <h1>
+                                <field name="name" placeholder="Title"/>
+                            </h1>
+                        </div>
+                        <group col="1">
+                            <group>
+                                <field name="create_date"/>
+                                <field name="operation_count"/>
+                            </group>
+                            <group>
+                                <tree>
+                                    <field name="operation_ids" context="{'default_schedule_id': active_id}"/>
+                                </tree>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="schedule_tree_view" model="ir.ui.view">
+            <field name="name">shipping.schedule.tree</field>
+            <field name="model">shipping.schedule</field>
+            <field name="arch" type="xml">
+                <tree string="Schedule">
+                    <field name="name"/>
+                    <field name="create_date"/>
+                </tree>
+            </field>
+        </record>
+
+        <!--        <record id="schedule_search_view" model="ir.ui.view">-->
+        <!--            <field name="name">shipping.schedule.search</field>-->
+        <!--            <field name="model">shipping.schedule</field>-->
+        <!--            <field name="arch" type="xml">-->
+        <!--                <search string="Schedule">-->
+        <!--                    <group expand="1" string="Group By">-->
+        <!--                        <filter string="Example Field" name="example_field" domain="[]"-->
+        <!--                                context="{'group_by':'example_field'}"/>-->
+        <!--                    </group>-->
+        <!--                </search>-->
+        <!--            </field>-->
+        <!--        </record>-->
+
+        <record id="schedule_act_window" model="ir.actions.act_window">
+            <field name="name">Schedule</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">shipping.schedule</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    There is no examples click here to add new Schedule.
+                </p>
+            </field>
+        </record>
+        <!-- This Menu Item will appear in the Upper bar, That's why It needs NO parent or action -->
+        <menuitem name="Schedule" id="shipping_schedule" parent="shipping.shipping_root" action="schedule_act_window"/>
+
+    </data>
+</odoo>

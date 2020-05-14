@@ -1,5 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+
 <odoo>
+    <template id="assets_backend" name="project_qzhub" inherit_id="web.assets_backend">
+        <xpath expr="." position="inside">
+            <link rel="stylesheet" href="/shipping/static/src/css/Kanban-style.css"/>
+        </xpath>
+    </template>
     <data>
 
         <record id="waybill_form_view" model="ir.ui.view">
@@ -8,19 +15,54 @@
             <field name="arch" type="xml">
                 <form string="Waybill">
                     <sheet>
-                        <div class="oe_title">
-                            <label for="serial"/>
-                            <h1>
+                        <div>
+                            <label for="name" class="oe_edit_only"/>
+                            <h1 class="oe_title">
+                                <!--<field name="serial"
+                                       class="oe_inline"/>-->
                                 <field name="name"/>
                             </h1>
-                            <field name="serial"/>
+                            <label for="create_date" class="oe_edit_only"/>
+                            <h2>
+                                <field name="create_date"/>
+                            </h2>
                         </div>
-                        <group>
-                            <field name="driver_id"/>
-                            <field name="vehicle_id"/>
-                            <field name="service_ids"/>
-                            <field name="route_ids"/>
+                        <group name="left" col="2">
+                            <group name="vehicle" string="Vehicle info">
+                                <field name="vehicle_id"/>
+                                <field name="license_plate"/>
+                            </group>
+
+                            <group name="driver" string="Driver info">
+                                <field name="driver_id"/>
+                                <field name="driver_identification"/>
+                            </group>
+
+                            <group name="customer" string="Customer info">
+                                <field name="customer_id"/>
+                                <field name="start_time_actual"/>
+                                <field name="end_time_actual"/>
+                            </group>
+
+                            <group name="route" string="Route info">
+                                <field name="route_id"/>
+                                <field name="garage_id"/>
+                            </group>
+
+                            <group name="odometer" string="Odometer info">
+                                <field name="odometer_before"/>
+                                <field name="odometer_after"/>
+                                <field name="odometer_unit"/>
+                            </group>
+                            <group name="fuel" string="Fuel info">
+                                <field name="fuel_start"/>
+                                <field name="fuel_end"/>
+                                <field name="fuel_type"/>
+                            </group>
                         </group>
+                        <div>
+
+                        </div>
                     </sheet>
                 </form>
             </field>
@@ -31,12 +73,12 @@
             <field name="model">shipping.waybill</field>
             <field name="arch" type="xml">
                 <tree string="Waybill">
-                    <field name="number"/>
-                    <field name="create_date"/>
-                    <field name="service_ids"/>
+                    <field name="number" string="#"/> <!--style="width: 15px" string="#"-->
+                    <field name="create_date"/>   <!--style="width: 11.5%"-->
+                    <field name="route_id"/>
                     <field name="vehicle_id"/>
                     <field name="driver_id"/>
-                    <field name="route_ids"/>
+                    <field name="customer_id"/>
                 </tree>
             </field>
         </record>
@@ -52,61 +94,117 @@
             </field>
         </record>-->
 
-<!--        <record id="waybill_graph_view" model="ir.ui.view">
-            <field name="name">shipping.waybill.graph</field>
-            <field name="model">shipping.waybill</field>
-            <field name="arch" type="xml">
-                <graph string="Waybill">
-                    <field name="example_field"/>
-                    <field name="example_field" type="measure"/>
-                </graph>
-            </field>
-        </record>-->
+        <!--        <record id="waybill_graph_view" model="ir.ui.view">
+                    <field name="name">shipping.waybill.graph</field>
+                    <field name="model">shipping.waybill</field>
+                    <field name="arch" type="xml">
+                        <graph string="Waybill">
+                            <field name="example_field"/>
+                            <field name="example_field" type="measure"/>
+                        </graph>
+                    </field>
+                </record>-->
 
-<!--        <record id="waybill_pivot_view" model="ir.ui.view">
-            <field name="name">shipping.waybill.pivot</field>
-            <field name="model">shipping.waybill</field>
-            <field name="arch" type="xml">
-                <pivot string="Waybill">
-                    <field name="example_field" type="row"/>
-                    <field name="example_field" type="measure"/>
-                </pivot>
-            </field>
-        </record>-->
+        <!--        <record id="waybill_pivot_view" model="ir.ui.view">
+                    <field name="name">shipping.waybill.pivot</field>
+                    <field name="model">shipping.waybill</field>
+                    <field name="arch" type="xml">
+                        <pivot string="Waybill">
+                            <field name="example_field" type="row"/>
+                            <field name="example_field" type="measure"/>
+                        </pivot>
+                    </field>
+                </record>-->
 
-<!--        <record id="waybill_search_view" model="ir.ui.view">
-            <field name="name">shipping.waybill.search</field>
-            <field name="model">shipping.waybill</field>
-            <field name="arch" type="xml">
-                <search string="Waybill">
-                    <group expand="1" string="Group By">
-                        <filter string="Example Field" name="example_field" domain="[]"
-                                context="{'group_by':'example_field'}"/>
-                    </group>
-                </search>
-            </field>
-        </record>-->
+        <!--        <record id="waybill_search_view" model="ir.ui.view">
+                    <field name="name">shipping.waybill.search</field>
+                    <field name="model">shipping.waybill</field>
+                    <field name="arch" type="xml">
+                        <search string="Waybill">
+                            <group expand="1" string="Group By">
+                                <filter string="Example Field" name="example_field" domain="[]"
+                                        context="{'group_by':'example_field'}"/>
+                            </group>
+                        </search>
+                    </field>
+                </record>-->
 
+        <!-- Kanban card -->
         <record id="waybill_kanban_view" model="ir.ui.view">
             <field name="name">shipping.waybill.kanban</field>
             <field name="model">shipping.waybill</field>
+            <field name="type">kanban</field>
             <field name="arch" type="xml">
-                <kanban>
-                    <field name="id"/>
-                    <field name="example_field"/>
+                <kanban class="o_kanban_mobile">
+                    <field name="number"/>
+                    <field name="create_date"/>
+                    <field name="vehicle_id"/>
+                    <field name="driver_id"/>
+                    <field name="serial"/>
+                    <field name="customer_id"/>
                     <templates>
-                        <t t-name="kanban-box">
-                            <div class="oe_kanban_global_click o_res_partner_kanban">
-                                <div class="oe_kanban_details">
-                                    <strong class="o_kanban_record_title oe_partner_heading">
-                                        <field name="name"/>
-                                    </strong>
-                                </div>
-                                <div class="oe_kanban_details">
+                        <div t-name="kanban-box"
+                             class="oe_kanban_card oe_kanban_global_click mx-0 mb-3 p-0 border-0 bg-none mt-1">
+                            <div class="card bg-light w-100">
+                                <!--Kanban's header -->
+                                <div class="project__header-kanban">
 
+                                    <!--Project key-->
+                                    <div class="padding-name kanban__sprint-header">
+
+                                        <div class="kanban__sprint-key">
+                                            <small>
+                                                <field name="create_date"/>
+                                            </small>
+                                        </div>
+
+                                        <div class="kanban__sprint-name">
+                                            <small>
+                                                <field name="name" class="ml-1"/>
+                                            </small>
+                                        </div>
+
+                                    </div>
+
+                                    <!--Kanban's dropdown menu-->
+                                    <div class="o_dropdown_kanban dropdown">
+                                        <a role="button" class="dropdown-toggle o-no-caret btn" data-toggle="dropdown"
+                                           href="#" aria-label="Dropdown menu" title="Dropdown menu">
+                                            <span class="fa fa-ellipsis-v"/>
+                                        </a>
+                                        <div class="dropdown-menu" role="menu">
+                                            <a t-if="widget.editable" role="menuitem" type="edit"
+                                               class="dropdown-item fa fa-pencil-square-o">
+                                                <span class="ml-3">Edit</span>
+                                            </a>
+                                            <a t-if="widget.editable" role="menuitem" type="delete"
+                                               class="dropdown-item fa fa-times">
+                                                <span class="ml-3">Delete</span>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <!-- End header -->
+                                </div>
+
+                                <!-- Kanban's sprint goal-->
+
+                                <!--Body kanban -->
+
+
+                                <div class="button-section ">
+                                    <!--Button -->
+                                    <t t-esc="record.driver_id.value"/>
+                                    <t t-esc="record.vehicle_id.value"/>
+                                </div>
+
+
+                                <div class="sprint__footer-kanban padding-name">
+                                    <div class="oe_right">
+                                        <t t-esc="record.serial.value"/>
+                                    </div>
                                 </div>
                             </div>
-                        </t>
+                        </div>
                     </templates>
                 </kanban>
             </field>
@@ -118,15 +216,15 @@
             <field name="res_model">shipping.waybill</field>
             <field name="view_type">form</field>
             <field name="view_mode">kanban,tree,form</field>
-<!--            <field name="context">{"search_default_example_field":1}</field>-->
+            <!--            <field name="context">{"search_default_example_field":1}</field>-->
             <field name="help" type="html">
                 <p class="oe_view_nocontent_create">
                     There is no examples click here to add new Waybill.
                 </p>
             </field>
         </record>
-
+        <!-- This Menu Item will appear in the Upper bar, That's why It needs NO parent or action -->
+        <menuitem id="shipping_root" name="Shipping" sequence="0"/>
         <menuitem name="Waybill" id="shipping_waybill" parent="shipping_root" action="waybill_act_window"/>
-
     </data>
 </odoo>

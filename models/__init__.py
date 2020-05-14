@@ -1,3 +1,10 @@
 # -*- coding: utf-8 -*-
 
-from . import models
+from . import (Waybill,
+               Driver,
+               Partner,
+               Vehicle,
+               Schedule,
+                Location,
+                Route,
+               )

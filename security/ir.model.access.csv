@@ -1,2 +1,13 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_waybill_waybill,waybill.waybill,model_waybill_waybill,,1,0,0,0
+access_waybill_waybill_user,access.waybill.waybill.user,model_waybill_waybill,base.user_root,1,1,1,1
+access_asset_asset_user,access.asset.asset.user,model_asset_asset,base.user_root,1,1,1,1
+access_fleet_vehicle_user,access.fleet.vehicle.user,model_fleet_vehicle,base.user_root,1,1,1,1
+access_hr_emoloyee_user_root,access.hr.emoloyee.user_root,model_hr_emoloyee,base.user_root,1,1,1,1
+access_res_partner_user_root,access.res.partner.user_root,model_res_partner,base.user_root,1,1,1,1
+access_shipping_schedule_user_root,access.shipping.schedule.user_root,model_shipping_schedule,base.user_root,1,1,1,1
+access_shipping_schedule_operation_user_root,access.shipping.schedule.operation.user_root,model_shipping_schedule_operation,base.user_root,1,1,1,1
+access_shipping_route_user_root,access.shipping.route.user_root,model_shipping_route,base.user_root,1,1,1,1
+access_shipping_route_line_user_root,access.shipping.route.line.user_root,model_shipping_route_line,base.user_root,1,1,1,1
+access_product_product_user_root,access.product.product.user_root,model_product_product,base.user_root,1,1,1,1
+access_shipping_open_waybill_user_root,access.shipping.open_waybill.user_root,model_shipping_open_waybill,base.user_root,1,1,1,1
+access_shipping_close_waybill_user_root,access.shipping.close_waybill.user_root,model_shipping_close_waybill,base.user_root,1,1,1,1
