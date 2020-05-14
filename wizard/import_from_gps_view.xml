@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="import_from_gps_form" model="ir.ui.view">
+            <field name="name">shipping.import_from_gps.form</field>
+            <field name="model">shipping.import_from_gps</field>
+            <field name="arch" type="xml">
+                <form string="Import from GPS">
+                    <sheet>
+<!--                        <group>-->
+<!--                            <field name="in_gps_count"/>-->
+<!--                            <field name="imported_count"/>-->
+<!--                            <field name="not_imported_count"/>-->
+<!--                        </group>-->
+                    </sheet>
+                    <footer>
+                        <button name="import_vehicles_from_gps" string="Import" class="btn-primary" type="object"/>
+                        <button string="Cancel" class="btn-default" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+    </data>
+</odoo>

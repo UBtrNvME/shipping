@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-
+import requests, time
 from odoo import models, fields, api
 
 
@@ -28,7 +28,7 @@ class Waybill(models.Model):
     end_time_planned = fields.Datetime(string='End time',
                                        readonly=True,
                                        help="Time of the end of the shipping mission, according to schedule")
-    start_time_actual = fields.Datetime(string='End time',
+    start_time_actual = fields.Datetime(string='Start time',
                                         readonly=True,
                                         help="Time of the end of the shipping mission")
     end_time_actual = fields.Datetime(string='End time',
@@ -62,26 +62,8 @@ class Waybill(models.Model):
     fuel_type = fields.Selection(string='Fuel type', related='vehicle_id.log_fuel.cost_type')
     garage_id = fields.Char(string='Garage id')
     active_operation = fields.Many2one(comodel_name='shipping.schedule.operation')
-
-    # @api.depends('vehicle_id')
-    # @api.one
-    # def _compute_fuel_start(self):
-    #     self.fuel_start = self.vehicle_id.fuel_in_the_tank
-    #
-    # def _inverse_fuel_start(self):
-    #     in_the_tank = self.vehicle_id.fuel_in_the_tank
-    #     start = self.fuel_start
-    #     if in_the_tank is not start:
-    #         refilled = start - in_the_tank
-    #         if refilled > 0:
-    #             data = {
-    #                 'vehicle_id': self.vehicle_id,
-    #                 'liter'     : refilled,
-    #                 'date'      : self.create_date
-    #                 }
-    #             self.env['fleet.vehicle.log.fuel'].sudo().write(data)
-    #         else:
-    #             raise ArithmeticError
+    # Atrributes=   :type= GPS params
+    map_image = fields.Binary()
 
     @api.model
     def create(self, vals):
@@ -101,10 +83,10 @@ class Waybill(models.Model):
             in_tank = self.vehicle_id.fuel_in_the_tank
             at_start = vals['fuel_start']
             refilled = at_start - in_tank
-            if refilled:
+            if refilled >= 0:
                 self._create_fuel_log(refilled)
                 self.vehicle_id.fuel_in_the_tank = at_start
-            #FIXME find a way to make this constraints work
+            # FIXME find a way to make this constraints work
             else:
                 raise ValueError('Your value is lower than in the tank value!')
         else:
