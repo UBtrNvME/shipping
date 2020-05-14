@@ -28,6 +28,27 @@
                         <field name="digital_id" class="oe_inline" placeholder="e.g. 32313564"/>
                     </h2>
                 </xpath>
+                <xpath expr="//sheet" position="inside">
+                    <group name="Geo Group" string="GEO">
+                        <field name="latitude"/>
+                        <field name="longitude"/>
+                    </group>
+                </xpath>
+                <xpath expr="//sheet" position="inside">
+                    <notebook name="notebook">
+                        <page name="map" string="Map">
+                            <field name="geo_position" widget="map"  nolabel="1"/>
+                        </page>
+                    </notebook>
+                </xpath>
+                <xpath expr="//group[2]/group[2]" position="attributes">
+                    <attribute name="name">engine_options</attribute>
+                </xpath>
+                <xpath expr="//group[@name='engine_options']" position="inside">
+                    <field name="fuel_in_the_tank"/>
+                </xpath>
+
+
 
             </field>
         </record>
