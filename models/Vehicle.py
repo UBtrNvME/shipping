@@ -1,5 +1,6 @@
 from odoo import fields, models, api
 from ..scripts import gps_api_loader as gal
+import json
 
 
 class Vehicle(models.Model):
@@ -19,6 +20,7 @@ class Vehicle(models.Model):
 
     latitude = fields.Float()
     longitude = fields.Float()
+    geo_position = fields.Char(string='Geo Position', compute="_compute_geo_position")
 
     # Changing default fields
     def _get_default_driver(self):
@@ -29,6 +31,12 @@ class Vehicle(models.Model):
         return default_driver.id
 
     driver_id = fields.Many2one(default=_get_default_driver)
+
+    @api.one
+    @api.depends('latitude', 'longitude')
+    def _compute_geo_position(self):
+        geo = {u'position': {u'lat': self.latitude, u'lng': self.longitude}, u'zoom': 12}
+        self.geo_position = json.dumps(geo)
 
     def get_state_from_gps(self):
         print("state of %s vehicle received" % (self.digital_id))

@@ -28,7 +28,7 @@ class Waybill(models.Model):
     end_time_planned = fields.Datetime(string='End time',
                                        readonly=True,
                                        help="Time of the end of the shipping mission, according to schedule")
-    start_time_actual = fields.Datetime(string='End time',
+    start_time_actual = fields.Datetime(string='Start time',
                                         readonly=True,
                                         help="Time of the end of the shipping mission")
     end_time_actual = fields.Datetime(string='End time',
@@ -64,11 +64,6 @@ class Waybill(models.Model):
     active_operation = fields.Many2one(comodel_name='shipping.schedule.operation')
     # Atrributes=   :type= GPS params
     map_image = fields.Binary()
-    # gps_login = 'toottk'
-    # gps_password = 'DGvvAZ5zL'
-    # gps_url = 'https://online.omnicomm.ru'
-    # gps_jwt = ''
-    # gps_refresh_key = ''
 
     @api.model
     def create(self, vals):
@@ -88,7 +83,7 @@ class Waybill(models.Model):
             in_tank = self.vehicle_id.fuel_in_the_tank
             at_start = vals['fuel_start']
             refilled = at_start - in_tank
-            if refilled:
+            if refilled >= 0:
                 self._create_fuel_log(refilled)
                 self.vehicle_id.fuel_in_the_tank = at_start
             # FIXME find a way to make this constraints work

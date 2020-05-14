@@ -68,13 +68,16 @@ def get_vehicle_statistic_on_period(vehicle_id, time_start=datetime.datetime.now
     h = headers.copy()
     h['Authorization'] = "JWT " + values['gps_jwt']
     params = {
-        'timeBegin' : time_start.timestamp(),
-        'timeEnd'   : time_end.timestamp(),
+        'timeBegin' : int(time_start.timestamp()) + 21600,
+        'timeEnd'   : int(time_end.timestamp()) + 21600,
         'vehicles'  : f'[{vehicle_id}]',
         'dataGroups': "[mw,fuel,mnt]"
         }
     response = requests.get(url=f"{values['gps_url']}/ls/api/v1/reports/statistics", headers=h,
                             params=params)
+    print(
+        f"timeBegin = {params['timeBegin']}, timeEnd = {params['timeEnd']}, delta = {params['timeEnd'] - params['timeBegin']}")
+    print(response.url)
     return response
 
 

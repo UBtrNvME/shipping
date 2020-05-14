@@ -1,6 +1,5 @@
 from odoo import fields, models, api
 
-
 class Schedule(models.Model):
     _name = 'shipping.schedule'
     _description = 'A part of the shipping module, which will be controlling generation of the waybills'
@@ -63,10 +62,19 @@ class Operation(models.Model):
             }
 
     def action_close_waybill(self):
+        waybill = self.active_waybill
         # created context for the form view with a default preset values
         context = {
-            'default_waybill_id': self.active_waybill.id,
+            'default_waybill_id': waybill.id
             }
+        waybill.end_time_actual = fields.Datetime.now()
+        if waybill.vehicle_id.digital_id:
+            response = waybill.vehicle_id.get_state_from_gps()
+            if response.status_code == 200:
+                context['default_fuel_end'] = response.json()['currentFuel']
+            response = waybill.vehicle_id.get_statistics_from_gps(waybill.start_time_actual, waybill.end_time_actual)
+            if response.status_code == 200:
+                context['default_odometer_after'] = waybill.odometer_before + response.json()['data']['totalMw']['totalMovementMileage']
         # returning a form view with set parameters
         return {
             'name'     : 'Finish Waybill',

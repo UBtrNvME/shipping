@@ -1,5 +1,4 @@
 from odoo import fields, models, api
-import requests
 
 
 class OpenWaybill(models.TransientModel):
@@ -10,10 +9,12 @@ class OpenWaybill(models.TransientModel):
     operation_id = fields.Many2one(comodel_name='shipping.schedule.operation', readonly=True)
     driver_id = fields.Many2one(comodel_name='hr.employee')
     fuel_start = fields.Float()
+    odometer_before = fields.Float()
 
     @api.onchange('vehicle_id')
     def _onchange_fuel_start(self):
         self.fuel_start = self.vehicle_id.fuel_in_the_tank
+        self.odometer_before = self.vehicle_id.odometer
 
     def create_waybill(self):
         op = self.operation_id
@@ -34,7 +35,7 @@ class OpenWaybill(models.TransientModel):
             }
         waybill = self.env['shipping.waybill'].create(data)
         waybill.write({'fuel_start': self.fuel_start})
-        waybill.write({'odometer_before': self.vehicle_id.odometer})
+        waybill.write({'odometer_before': self.odometer_before})
         waybill.write({'start_time_actual': fields.Datetime.now()})
         self.env['shipping.schedule.operation'].search([('id', '=', op.id)]).write({'active_waybill': waybill.id})
         # waybill.write({'fuel_start': self.fuel_start})
@@ -48,13 +49,14 @@ class CloseWaybill(models.TransientModel):
 
     def close_waybill(self):
         waybill = self.env['shipping.waybill'].search([('id', '=', self.waybill_id.id)], limit=1)
-        waybill.end_time_actual = fields.Datetime.now()
-        if waybill.vehicle_id.digital_id:
-            response = waybill.vehicle_id.get_state_from_gps()
-            print(response.status_code)
-            if response.status_code == 200:
-                self.fuel_end = response.json()['currentFuel']
-            response = waybill.vehicle_id.get_statistics_from_gps(waybill.start_time_actual, waybill.end_time_actual)
+        # if waybill.vehicle_id.digital_id:
+        #     response = waybill.vehicle_id.get_state_from_gps()
+        #     print(response.status_code)
+        #     if response.status_code == 200:
+        #         self.fuel_end = response.json()['currentFuel']
+        #     response = waybill.vehicle_id.get_statistics_from_gps(waybill.start_time_actual, waybill.end_time_actual)
+        #     if response.status_code == 200:
+        #         self.odometer_after = waybill.odometer_before + response.json()['data']['totalMw']['totalMovementMileage']
         data = {
             'fuel_end'      : self.fuel_end,
             'odometer_after': float(self.odometer_after)
