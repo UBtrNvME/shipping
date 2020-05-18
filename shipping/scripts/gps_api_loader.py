@@ -44,7 +44,7 @@ def RequestWithRetry(req):
 
 
 def login_gps_system():
-    response = requests.post(url=f"{values['gps_url']}/auth/login?jwt=1", headers=headers,
+    response = requests.post(url="%s/auth/login?jwt=1"%(values['gps_url']), headers=headers,
                              data="{\"login\":\"%s\",\"password\":\"%s\"}" % (
                                  values['gps_login'], values['gps_password']))
     values['gps_jwt'] = response.json()['jwt']
@@ -57,7 +57,7 @@ def refresh_gps_system():
     h = headers.copy()
     h.pop('Content-Type')
     h['Authorization'] = values['gps_refresh_key']
-    response = requests.post(url=f"{values['gps_url']}/auth/refresh", headers=h)
+    response = requests.post(url="%s/auth/refresh"%(values['gps_url']), headers=h)
     values['gps_jwt'] = response.json()['jwt']
     values['gps_refresh_key'] = response.json()['refresh']
     values['exp'] = get_jwt_exp()
@@ -70,13 +70,13 @@ def get_vehicle_statistic_on_period(vehicle_id, time_start=datetime.datetime.now
     params = {
         'timeBegin' : int(time_start.timestamp()) + 21600,
         'timeEnd'   : int(time_end.timestamp()) + 21600,
-        'vehicles'  : f'[{vehicle_id}]',
+        'vehicles'  : '[%d]'%(vehicle_id),
         'dataGroups': "[mw,fuel,mnt]"
         }
-    response = requests.get(url=f"{values['gps_url']}/ls/api/v1/reports/statistics", headers=h,
+    response = requests.get(url="%s/ls/api/v1/reports/statistics"%(values['gps_url']), headers=h,
                             params=params)
-    print(
-        f"timeBegin = {params['timeBegin']}, timeEnd = {params['timeEnd']}, delta = {params['timeEnd'] - params['timeBegin']}")
+    # print(
+    #     f"timeBegin = {params['timeBegin']}, timeEnd = {params['timeEnd']}, delta = {params['timeEnd'] - params['timeBegin']}")
     print(response.url)
     return response
 
@@ -112,7 +112,7 @@ def add_new_vehicle(dictionary):
     xmlbuf2 = dicttoxml(dictionary, root=False, attr_type=False)
     xmlbody1 = format_string(xmlbuf1)
     xmlbody2 = format_string(xmlbuf2)
-    payload = "{\"xmlProfile\":" + f"\"{format_string(values['vehicle_xml_hat'])}{xmlbody1[2:-1]}\\r\\n{xmlbody2[2:-1]}" + "<\\/tns:vehicle>\"}"
+    payload = "{\"xmlProfile\":" + "\"%s%s\\r\\n%s"%(format_string(values['vehicle_xml_hat']),xmlbody1[2:-1],xmlbody2[2:-1]) + "<\\/tns:vehicle>\"}"
     response = requests.post(url='%s/ls/api/v1/vehicles?login=%s' % (values['gps_url'], values['gps_login']), headers=h,
                              data=payload)
     return response
@@ -123,7 +123,7 @@ def get_list_of_vehicles(group_id=None):
     h.pop('Content-Type')
     h['Authorization'] = "JWT " + values['gps_jwt']
     gid = "" if group_id is None else "/" + str(group_id)
-    response = requests.get(url=f"{values['gps_url']}/ls/api/v2/tree/vehicle{gid}", headers=h)
+    response = requests.get(url="%s/ls/api/v2/tree/vehicle{gid}"%(values['gps_url']), headers=h)
     return response
 
 
