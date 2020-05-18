@@ -224,7 +224,7 @@
             </field>
         </record>
         <!-- This Menu Item will appear in the Upper bar, That's why It needs NO parent or action -->
-        <menuitem id="shipping_root" name="Shipping" sequence="0"/>
-        <menuitem name="Waybill" id="shipping_waybill" parent="shipping_root" action="waybill_act_window"/>
+        <menuitem id="shipping_root" name="Shipping" sequence="15" groups="base.group_user"/>
+        <menuitem name="Waybill" id="shipping_waybill" parent="shipping_root" action="waybill_act_window" groups="base.group_user"/>
     </data>
 </odoo>

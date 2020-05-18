@@ -44,6 +44,5 @@
                  </field>
         </record>
          <!--This Menu Item will appear in the Upper bar, That's why It needs NO parent or action -->
-     <menuitem id="shipping_root" name="Shipping"/>
-     <menuitem name="Route" id="shipping_route" parent="shipping.shipping_root" action="action_route"/>
+     <menuitem name="Route" id="shipping_route" parent="shipping.shipping_root" action="action_route" groups="base.group_user"/>
 </odoo>

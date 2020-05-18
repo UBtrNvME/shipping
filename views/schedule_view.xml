@@ -67,7 +67,7 @@
             </field>
         </record>
         <!-- This Menu Item will appear in the Upper bar, That's why It needs NO parent or action -->
-        <menuitem name="Schedule" id="shipping_schedule" parent="shipping.shipping_root" action="schedule_act_window"/>
+        <menuitem name="Schedule" id="shipping_schedule" parent="shipping.shipping_root" action="schedule_act_window" groups="base.group_user"/>
 
     </data>
 </odoo>

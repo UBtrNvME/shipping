@@ -20,7 +20,7 @@
     'version'    : '0.1',
 
     # any module necessary for this one to work correctly
-    'depends'    : ['fleet', 'hr', 'sale', 'asset', 'web_map'],
+    'depends'    : ['fleet', 'hr', 'sale', 'asset', 'web_map', 'base'],
 
     # always loaded
     'data'       : ['views/waybill_view.xml',
@@ -32,9 +32,10 @@
                     'wizard/import_from_gps_view.xml',
                     'views/fleet_vehicle_inherited.xml',
                     'wizard/open_waybill_view.xml',
-                    'wizard/close_waybill_view.xml',],
+                    'wizard/close_waybill_view.xml', ],
     # only loaded in demonstration mode
     'demo'       : [
         'demo/demo.xml',
-        ],
-    }
+    ],
+    'application': True
+}
