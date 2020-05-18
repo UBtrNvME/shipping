@@ -29,7 +29,6 @@
                     'views/templates.xml',
                     'views/route_view.xml',
                     'views/line_view.xml',
-                    'wizard/import_from_gps_view.xml',
                     'views/fleet_vehicle_inherited.xml',
                     'wizard/open_waybill_view.xml',
                     'wizard/close_waybill_view.xml', ],
