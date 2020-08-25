@@ -48,10 +48,8 @@ class Vehicle(models.Model):
 
     def get_statistics_from_gps(self, time_start, time_end):
         start, end = time_start.timestamp(), time_end.timestamp()
-        # print(f"statistics on period ({start} - {end}) received for {self.digital_id}")
         result = gal.RequestWithRetry(
             lambda: gal.get_vehicle_statistic_on_period(self.digital_id, time_start, time_end))
-        # print(result.json())
         return result
 
     def import_vehicles_from_gps(self):

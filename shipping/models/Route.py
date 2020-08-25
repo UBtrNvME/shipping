@@ -64,6 +64,3 @@ class Line(models.Model):
         if self.source_location and self.destination_location:
             self.line_name = self.source_location.name + " -> " \
                                    + self.destination_location.name"""
-
-
-

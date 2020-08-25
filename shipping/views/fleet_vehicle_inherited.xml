@@ -53,7 +53,7 @@
             </field>
         </record>
 
-        <record model="ir.actions.act_window" id="fleet_vehicle_import_from_gps_action">
+        <!--<record model="ir.actions.act_window" id="fleet_vehicle_import_from_gps_action">
             <field name="name">Import Vehicles from GPS Server</field>
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">shipping.import_from_gps</field>
@@ -63,6 +63,6 @@
         </record>
 
         <menuitem action="fleet_vehicle_import_from_gps_action" parent="fleet.fleet_configuration"
-                  id="fleet_vehicle_import_from_gps_menu" sequence="15"/>
+                  id="shipping.fleet_vehicle_import_from_gps_menu" sequence="15"/>-->
     </data>
 </odoo>
