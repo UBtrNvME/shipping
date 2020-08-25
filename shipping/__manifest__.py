@@ -23,7 +23,9 @@
     'depends'    : ['fleet', 'hr', 'product', 'asset', 'web_map'],
 
     # always loaded
-    'data'       : ['views/waybill_view.xml',
+    'data'       : ['security/ir.model.access.csv',
+                    'security/shipping_groups.xml',
+                    'views/waybill_view.xml',
                     'views/schedule_view.xml',
                     'views/operation_view.xml',
                     'views/templates.xml',
