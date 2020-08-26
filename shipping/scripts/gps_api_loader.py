@@ -56,7 +56,7 @@ def login_gps_system():
 def refresh_gps_system():
     h = headers.copy()
     h.pop('Content-Type')
-    h['Authorization'] = values['gps_refresh_key']
+    h['Authorization'] = "JWT " + values['gps_refresh_key']
     response = requests.post(url="%s/auth/refresh"%(values['gps_url']), headers=h)
     values['gps_jwt'] = response.json()['jwt']
     values['gps_refresh_key'] = response.json()['refresh']
