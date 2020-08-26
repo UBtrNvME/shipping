@@ -70,7 +70,7 @@ def get_vehicle_statistic_on_period(vehicle_id, time_start=datetime.datetime.now
     params = {
         'timeBegin' : int(time_start.timestamp()) + 21600,
         'timeEnd'   : int(time_end.timestamp()) + 21600,
-        'vehicles'  : '[%d]'%(vehicle_id),
+        'vehicles'  : '[%s]'%(vehicle_id),
         'dataGroups': "[mw,fuel,mnt]"
         }
     response = requests.get(url="%s/ls/api/v1/reports/statistics"%(values['gps_url']), headers=h,
